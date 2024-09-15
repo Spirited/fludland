@@ -1,0 +1,21 @@
+sso:
+  db-schema-name: sso
+
+preliquibase:
+  enabled: true
+  sql-script-references: classpath:preliquibase/schema.sql
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=${sso.db-schema-name}
+    username: postgres
+    password: 123456
+    hikari:
+      pool-name: Poolname-SSO
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${sso.db-schema-name}
+
+  liquibase:
+    change-log: classpath:dbchangelog-master.xml
