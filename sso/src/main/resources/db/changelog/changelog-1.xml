@@ -14,4 +14,9 @@
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/profiles.sql" />
     </changeSet>
+
+    <changeSet id="create_token_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/create_token_table.sql" />
+    </changeSet>
 </databaseChangeLog>

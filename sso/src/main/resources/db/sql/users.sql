@@ -3,5 +3,5 @@ create table users (
   username varchar(255),
   password varchar(255),
 
-  primary key (id)
+   CONSTRAINT pk_user primary key (id)
 );
