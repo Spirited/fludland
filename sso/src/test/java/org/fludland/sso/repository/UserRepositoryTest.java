@@ -58,11 +58,26 @@ class UserRepositoryTest extends AbstractIntegrationTest {
     @Test
     void test_save_users_profile_then_return_not_null_profile() {
         Profile profile = new Profile();
+        profile.setFirstName("name");
 
         User user = new User();
         user.setUsername("test");
         user.setPassword("password");
-        user.set
-        userRepository.save(user);
+        user.setProfile(profile);
+        User saved = userRepository.save(user);
+
+        System.out.println(saved);
+        System.out.println(saved.getProfile());
+
+        assertThat(saved).isNotNull();
+        assertThat(saved.getUsername()).isEqualTo("test");
+        assertThat(saved.getPassword()).isEqualTo("password");
+        assertThat(saved.getProfile()).isNotNull();
+        assertThat(saved.getProfile().getFirstName()).isEqualTo("name");
+
+        User user1 = userRepository.findById(3L).orElse(null);
+        System.out.println(user1);
+        System.out.println(user1.getProfile());
+
     }
 }
