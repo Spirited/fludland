@@ -21,7 +21,6 @@ class UserRepositoryTest extends AbstractIntegrationTest {
         List<User> all = userRepository.findAll();
         assertThat(all).isNotNull();
         assertThat(all).hasSize(2);
-        System.out.println("Fetched users: " + all);
     }
 
     @Test
@@ -66,18 +65,10 @@ class UserRepositoryTest extends AbstractIntegrationTest {
         user.setProfile(profile);
         User saved = userRepository.save(user);
 
-        System.out.println(saved);
-        System.out.println(saved.getProfile());
-
         assertThat(saved).isNotNull();
         assertThat(saved.getUsername()).isEqualTo("test");
         assertThat(saved.getPassword()).isEqualTo("password");
         assertThat(saved.getProfile()).isNotNull();
         assertThat(saved.getProfile().getFirstName()).isEqualTo("name");
-
-        User user1 = userRepository.findById(3L).orElse(null);
-        System.out.println(user1);
-        System.out.println(user1.getProfile());
-
     }
 }

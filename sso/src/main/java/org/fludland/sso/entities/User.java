@@ -25,8 +25,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserAccountStatus accountStatus;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
+    @OneToOne(mappedBy = "user")
     private Profile profile;
 
     public Integer getId() {

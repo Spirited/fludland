@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // don't replace our DB with an in-memory one
 @DataJpaTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @ContextConfiguration(initializers = AbstractIntegrationTest.DockerPostgresDataSourceInitializer.class)
-abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest {
     @Container
     private static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer()
             .withDatabaseName("sso")

@@ -25,7 +25,8 @@ public class Profile {
     @Column(name = "email", length = 100)
     private String email;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Integer getId() {

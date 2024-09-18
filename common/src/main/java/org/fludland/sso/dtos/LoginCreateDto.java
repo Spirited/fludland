@@ -1,4 +1,4 @@
-package org.fludland.sso;
+package org.fludland.sso.dtos;
 
 public class LoginCreateDto {
     private final String username;
