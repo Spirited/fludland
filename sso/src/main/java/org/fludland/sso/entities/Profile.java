@@ -2,6 +2,7 @@ package org.fludland.sso.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "profiles", schema = "sso")
@@ -24,8 +25,7 @@ public class Profile {
     @Column(name = "email", length = 100)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "profile")
     private User user;
 
     public Integer getId() {
@@ -68,4 +68,14 @@ public class Profile {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("email", email)
+                .append("user", user)
+                .toString();
+    }
 }

@@ -2,6 +2,7 @@ package org.fludland.sso.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.fludland.sso.enums.UserAccountStatus;
 
 @Entity
 @Table(name = "users", schema = "sso")
@@ -19,6 +20,14 @@ public class User {
     @Size(max = 255)
     @Column(name = "password")
     private String password;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UserAccountStatus accountStatus;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     public Integer getId() {
         return id;
@@ -42,6 +51,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     @Override

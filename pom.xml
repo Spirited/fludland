@@ -21,10 +21,16 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <preliquibase.version>1.5.1</preliquibase.version>
+        <commons-lang3>3.14.0</commons-lang3>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3}</version>
+            </dependency>
             <dependency>
                 <groupId>net.lbruun.springboot</groupId>
                 <artifactId>preliquibase-spring-boot-starter</artifactId>

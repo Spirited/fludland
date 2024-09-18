@@ -5,15 +5,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 						http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <changeSet id="create_profiles_tables" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/profiles.sql" />
+    </changeSet>
+
     <changeSet id="create_users_tables" author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/users.sql" />
     </changeSet>
 
-    <changeSet id="create_profiles_tables" author="@skompanets" context="migrate01">
-        <comment>create currencies tables</comment>
-        <sqlFile path="db/sql/profiles.sql" />
-    </changeSet>
+
 
     <changeSet id="create_token_table" author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
