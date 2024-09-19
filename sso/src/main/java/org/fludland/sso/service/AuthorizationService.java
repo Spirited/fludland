@@ -1,6 +1,6 @@
 package org.fludland.sso.service;
 
-import org.fludland.sso.SuccessfulRegistration;
+import org.fludland.sso.dtos.SuccessfulRegistration;
 import org.fludland.sso.dtos.LoginCreateDto;
 
 public interface AuthorizationService {

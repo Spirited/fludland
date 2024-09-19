@@ -1,9 +1,10 @@
 package org.fludland.sso.service;
 
-import org.fludland.sso.SuccessfulRegistration;
+import org.fludland.sso.dtos.SuccessfulRegistration;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
+import org.fludland.sso.repository.ProfileRepository;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.impl.AuthorizationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,13 +22,15 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 class AuthorizationServiceTest {
     private UserRepository moockUserRepository;
+    private ProfileRepository mockProfileRepository;
 
     private AuthorizationService authorizationService;
 
     @BeforeEach
     public void init() {
         moockUserRepository = mock(UserRepository.class);
-        authorizationService = new AuthorizationServiceImpl(moockUserRepository);
+        mockProfileRepository = mock(ProfileRepository.class);
+        authorizationService = new AuthorizationServiceImpl(moockUserRepository, mockProfileRepository);
     }
 
     @Test

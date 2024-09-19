@@ -1,4 +1,4 @@
-package org.fludland.sso;
+package org.fludland.sso.dtos;
 
 public class SuccessfulRegistration {
     private final String token;

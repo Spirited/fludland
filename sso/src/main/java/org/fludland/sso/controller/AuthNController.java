@@ -1,6 +1,6 @@
 package org.fludland.sso.controller;
 
-import org.fludland.sso.SuccessfulRegistration;
+import org.fludland.sso.dtos.SuccessfulRegistration;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;

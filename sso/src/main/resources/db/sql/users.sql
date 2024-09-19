@@ -4,7 +4,5 @@ create table users (
   password  varchar(255),
   status    varchar(255),
 
-  profile_id integer references profiles(id),
-
   CONSTRAINT pk_user primary key (id)
 );
