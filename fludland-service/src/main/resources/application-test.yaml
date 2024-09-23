@@ -1,0 +1,17 @@
+sso:
+  db-schema-name: fludland
+
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:alpine
+    username: postgres
+    password: 123456
+    hikari:
+      pool-name: Poolname-FLUDLAND
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        default_schema: ${sso.db-schema-name}
+
