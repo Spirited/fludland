@@ -10,4 +10,9 @@
         <sqlFile path="db/sql/post.sql" />
     </changeSet>
 
+    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/thumbs.sql" />
+    </changeSet>
+
 </databaseChangeLog>
