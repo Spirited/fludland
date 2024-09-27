@@ -10,9 +10,22 @@
         <sqlFile path="db/sql/post.sql" />
     </changeSet>
 
-    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">
+    <changeSet id="create_update_modified_column_procedure." author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
-        <sqlFile path="db/sql/thumbs.sql" />
+        <sqlFile path="db/sql/procedures/update_modified_column_procedure.sql" />
     </changeSet>
+
+    <changeSet id="create_update_modified_time_trigger.sql" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/triggers/update_modified_time_trigger.sql" />
+    </changeSet>
+
+
+
+
+<!--    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">-->
+<!--        <comment>create currencies tables</comment>-->
+<!--        <sqlFile path="db/sql/thumbs.sql" />-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>
