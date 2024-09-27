@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private static final String POST_NOT_FOUND = "Post not found";
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository) {
@@ -34,7 +35,7 @@ public class PostServiceImpl implements PostService {
     @Transactional
     @Override
     public PostDto update(Long postId, EditPostDto postDto) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));
 
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
@@ -46,16 +47,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto get(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));
         return convert(post);
     }
 
     @Transactional
     @Override
     public boolean delete(Long id) {
-        postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
-
-        postRepository.deleteById(id);
+        if (postRepository.existsById(id)) {
+            postRepository.deleteById(id);
+        } else {
+            throw new PostNotFoundException(POST_NOT_FOUND);
+        }
 
         return postRepository.findById(id).orElse(null) == null;
     }
@@ -65,8 +68,8 @@ public class PostServiceImpl implements PostService {
                 post.getId(), post.getTitle(), post.getContent(),
                 post.getUserId(),
                 post.getMediaFileId(),
-                post.getCreatedAt().toInstant(),
-                post.getModifiedAt()
+                post.getCreatedAt() != null ? post.getCreatedAt().toInstant() : null,
+                post.getModifiedAt() != null ? post.getModifiedAt().toInstant() : null
         );
     }
 }

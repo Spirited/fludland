@@ -30,7 +30,7 @@ public class PostController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<PostDto> editPost(@PathVariable String id, @RequestBody EditPostDto editPostDto) {
-        throw new UnsupportedOperationException();
+        return ResponseEntity.ok(postService.update(Long.parseLong(id), editPostDto));
     }
 
     @DeleteMapping(path = "/{id}")

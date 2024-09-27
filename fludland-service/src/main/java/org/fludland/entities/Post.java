@@ -5,10 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.SourceType;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 
 @Entity
 @Table(name = "posts", schema = "fludland")
@@ -36,17 +35,13 @@ public class Post {
     @Column(name = "media_file_id")
     private Integer mediaFileId;
 
-//    @Basic(optional = false)
-//    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @Column(name = "created_at")//, insertable = false, updatable = false)
+    @CreationTimestamp(source = SourceType.DB)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @CreationTimestamp
-    @UpdateTimestamp
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modified_at", insertable = false)
+    private Timestamp modifiedAt;
 
     public Integer getId() {
         return id;
@@ -96,11 +91,11 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public Instant getModifiedAt() {
+    public Timestamp getModifiedAt() {
         return modifiedAt;
     }
 
-    public void setModifiedAt(Instant modifiedAt) {
+    public void setModifiedAt(Timestamp modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 
