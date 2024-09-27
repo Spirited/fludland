@@ -3,7 +3,11 @@ package org.fludland.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
@@ -32,9 +36,15 @@ public class Post {
     @Column(name = "media_file_id")
     private Integer mediaFileId;
 
-    @Column(name = "created_at")
-    private Instant createdAt;
+//    @Basic(optional = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "created_at")//, insertable = false, updatable = false)
+    private Timestamp createdAt;
 
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "modified_at")
     private Instant modifiedAt;
 
@@ -78,11 +88,11 @@ public class Post {
         this.mediaFileId = mediaFileId;
     }
 
-    public Instant getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -94,4 +104,16 @@ public class Post {
         this.modifiedAt = modifiedAt;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("title", title)
+                .append("content", content)
+                .append("userId", userId)
+                .append("mediaFileId", mediaFileId)
+                .append("createdAt", createdAt)
+                .append("modifiedAt", modifiedAt)
+                .toString();
+    }
 }

@@ -7,20 +7,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 public class PostDto {
-    private final String id;
+    private final Integer id;
     private final String title;
     private final String content;
-    private final long userId;
-    private final long mediaFileId;
+    private final Integer userId;
+    private final Integer mediaFileId;
     private final Instant createdAt;
     private final Instant updatedAt;
 
     @JsonCreator
-    public PostDto(@JsonProperty("id") String id,
+    public PostDto(@JsonProperty("id") Integer id,
                    @JsonProperty("title") String title,
                    @JsonProperty("content") String content,
-                   @JsonProperty("userId") long userId,
-                   @JsonProperty("mediaFileId") long mediaFileId,
+                   @JsonProperty("userId") Integer userId,
+                   @JsonProperty("mediaFileId") Integer mediaFileId,
                    @JsonProperty("createdAt") Instant createdAt,
                    @JsonProperty("updatedAt") Instant updatedAt) {
         this.id = id;
@@ -33,7 +33,7 @@ public class PostDto {
     }
 
     @JsonGetter
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -48,12 +48,12 @@ public class PostDto {
     }
 
     @JsonGetter
-    public long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
     @JsonGetter
-    public long getMediaFileId() {
+    public Integer getMediaFileId() {
         return mediaFileId;
     }
 

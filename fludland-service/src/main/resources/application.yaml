@@ -19,9 +19,12 @@ spring:
     properties:
       hibernate:
         default_schema: ${sso.db-schema-name}
+    show-sql: on
 
   liquibase:
     change-log: classpath:dbchangelog-master.xml
+  jackson:
+    default-property-inclusion: non_null
 
 server:
   port: 8082

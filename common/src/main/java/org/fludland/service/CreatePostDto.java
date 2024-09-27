@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreatePostDto {
     private final String title;
     private final String content;
-    private final long userId;
+    private final int userId;
 
     @JsonCreator
     public CreatePostDto(@JsonProperty("title") String title,
                          @JsonProperty("content") String content,
-                         @JsonProperty("userId") long userId) {
+                         @JsonProperty("userId") int userId) {
         this.title = title;
         this.content = content;
         this.userId = userId;
@@ -29,7 +29,7 @@ public class CreatePostDto {
     }
 
     @JsonGetter
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 }
