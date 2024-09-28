@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthNController {
+public class AuthController {
     private final AuthorizationService authorizationService;
 
     @Autowired
-    public AuthNController(AuthorizationService authorizationService) {
+    public AuthController(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginCreateDto dto) {
+
         return ResponseEntity.ok("+");
     }
 
@@ -39,4 +40,6 @@ public class AuthNController {
     public void deleteAccount(String username) {
         //TODO
     }
+
+    //TODO: do verify profile, forget password, change password, remember Me
 }

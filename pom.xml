@@ -24,10 +24,29 @@
         <commons-lang3>3.14.0</commons-lang3>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <fasterxml.jackson.version>2.17.2</fasterxml.jackson.version>
+<!--        <jjwt.version>0.12.3</jjwt.version>-->
+        <auth0.jwt.version>3.18.1</auth0.jwt.version>
+        <modelmapperr.version>3.2.1</modelmapperr.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${auth0.jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapperr.version}</version>
+            </dependency>
+
+            <!--            <dependency>-->
+<!--                <groupId>io.jsonwebtoken</groupId>-->
+<!--                <artifactId>jjwt</artifactId>-->
+<!--                <version>${jjwt.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

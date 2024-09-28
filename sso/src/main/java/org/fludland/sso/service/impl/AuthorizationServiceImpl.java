@@ -8,6 +8,7 @@ import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
 import org.fludland.sso.repository.ProfileRepository;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.AuthorizationService;
+import org.fludland.sso.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +19,15 @@ import java.util.Optional;
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final TokenUtils tokenUtils;
 
     @Autowired
-    public AuthorizationServiceImpl(UserRepository userRepository, ProfileRepository profileRepository) {
+    public AuthorizationServiceImpl(final UserRepository userRepository,
+                                    final ProfileRepository profileRepository,
+                                    final TokenUtils tokenUtils) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.tokenUtils = tokenUtils;
     }
 
     @Override
@@ -48,7 +53,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         profileRepository.save(profile);
 
-        return new SuccessfulRegistration("12345");
+        return new SuccessfulRegistration(tokenUtils.generateJWT(user.getUsername()));
     }
 
     @Override

@@ -35,8 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // don't replace our DB with an in-memory one
-@ContextConfiguration(initializers = AuthNControllerTest.DockerPostgresDataSourceInitializer.class)
-public class AuthNControllerTest {
+@ContextConfiguration(initializers = AuthControllerTest.DockerPostgresDataSourceInitializer.class)
+public class AuthControllerTest {
 
     @Container
     private static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer()
