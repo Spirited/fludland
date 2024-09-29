@@ -32,7 +32,6 @@ public class PostServiceImpl implements PostService {
         return convert(saved);
     }
 
-    @Transactional
     @Override
     public PostDto update(Long postId, EditPostDto postDto) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));

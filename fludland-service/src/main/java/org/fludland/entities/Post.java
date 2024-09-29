@@ -3,7 +3,6 @@ package org.fludland.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 
@@ -97,18 +96,5 @@ public class Post {
 
     public void setModifiedAt(Timestamp modifiedAt) {
         this.modifiedAt = modifiedAt;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("title", title)
-                .append("content", content)
-                .append("userId", userId)
-                .append("mediaFileId", mediaFileId)
-                .append("createdAt", createdAt)
-                .append("modifiedAt", modifiedAt)
-                .toString();
     }
 }

@@ -1,6 +1,3 @@
-
-insert into sso.users(id, username, password) values (nextval('sso.users_id_seq'), 'sdf', '1234');
-insert into sso.users(id, username, password) values (nextval('sso.users_id_seq'), 'sdf123', '1234');
-
+insert into fludland.posts(id, title, content, user_id, created_at) values (nextval('fludland.posts_id_seq'),'test', 'large content', 321, current_timestamp);
 
 commit;

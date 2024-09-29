@@ -25,7 +25,7 @@ public class PostController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable String id) {
-        throw new UnsupportedOperationException();
+        return ResponseEntity.ok(postService.get(Long.parseLong(id)));
     }
 
     @PutMapping(path = "/{id}")
@@ -35,6 +35,6 @@ public class PostController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> deletePost(@PathVariable String id) {
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(postService.delete(Long.parseLong(id)));
     }
 }

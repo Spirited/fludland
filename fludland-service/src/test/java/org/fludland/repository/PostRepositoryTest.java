@@ -12,8 +12,7 @@ import java.time.Instant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
-@SqlGroup(@Sql({"classpath:/cleanup.sql"}))
+@SqlGroup(@Sql({"classpath:/cleanup.sql", "classpath:/data.sql"}))
 class PostRepositoryTest extends AbstractIntegrationTest {
     @Autowired
     private PostRepository postRepository;
@@ -38,8 +37,6 @@ class PostRepositoryTest extends AbstractIntegrationTest {
         post.setUserId(1);
         Post saved = postRepository.saveAndFlush(post);
 
-        System.out.println(saved);
-
         assertThat(saved).isNotNull();
         assertThat(saved.getTitle()).isEqualTo(post.getTitle());
         assertThat(saved.getContent()).isEqualTo(post.getContent());
@@ -60,7 +57,7 @@ class PostRepositoryTest extends AbstractIntegrationTest {
         assertThat(saved).isNotNull();
         assertThat(saved.getTitle()).isEqualTo(post.getTitle());
         assertThat(saved.getContent()).isEqualTo(post.getContent());
-        assertThat(post.getUserId()).isEqualTo(1);
+        assertThat(saved.getUserId()).isEqualTo(1);
         assertThat(saved.getCreatedAt()).isNotNull();
         assertThat(saved.getModifiedAt()).isNull();
 
@@ -76,5 +73,33 @@ class PostRepositoryTest extends AbstractIntegrationTest {
 
         assertThat(modifiedPost.getCreatedAt()).isNotNull();
         assertThat(modifiedPost.getModifiedAt()).isNotNull();
+    }
+
+    @Test
+    void test_get_post_by_id_expected_non_null_result() {
+        Post post = postRepository.findById(1L).orElse(null);
+        assertThat(post).isNotNull();
+        assertThat(post.getId()).isEqualTo(1);
+        assertThat(post.getTitle()).isEqualTo("test");
+        assertThat(post.getContent()).isEqualTo("large content");
+        assertThat(post.getCreatedAt()).isNotNull();
+        assertThat(post.getModifiedAt()).isNull();
+    }
+
+    @Test
+    void test_when_trying_fetch_non_exists_post_exception_expected() {
+        Post post = postRepository.findById(9999L).orElse(null);
+        assertThat(post).isNull();
+    }
+
+    @Test
+    void test_trying_delete_post_expected_null_result() {
+        Post post = postRepository.findById(1L).orElse(null);
+        assertThat(post).isNotNull();
+
+        postRepository.deleteById(1L);
+
+        Post deleted = postRepository.findById(1L).orElse(null);
+        assertThat(deleted).isNull();
     }
 }
