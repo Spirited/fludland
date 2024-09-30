@@ -3,8 +3,8 @@ package org.fludland.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-//@Entity
-//@Table(name = "thumbs", schema = "fludland")
+@Entity
+@Table(name = "thumbs", schema = "fludland")
 public class Thumb {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "thumbs_id_gen")

@@ -1,4 +1,4 @@
-package org.fludland.services;
+package org.fludland.services.impl;
 
 import org.fludland.entities.Post;
 import org.fludland.exceptions.PostNotFoundException;
@@ -6,6 +6,7 @@ import org.fludland.repositories.PostRepository;
 import org.fludland.service.CreatePostDto;
 import org.fludland.service.EditPostDto;
 import org.fludland.service.PostDto;
+import org.fludland.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -20,9 +20,9 @@
         <sqlFile path="db/sql/triggers/update_modified_time_trigger.sql" />
     </changeSet>
 
-<!--    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">-->
-<!--        <comment>create currencies tables</comment>-->
-<!--        <sqlFile path="db/sql/thumbs.sql" />-->
-<!--    </changeSet>-->
+    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/thumbs.sql" />
+    </changeSet>
 
 </databaseChangeLog>

@@ -4,7 +4,7 @@ import org.fludland.entities.Post;
 import org.fludland.exceptions.PostNotFoundException;
 import org.fludland.repositories.PostRepository;
 import org.fludland.services.PostService;
-import org.fludland.services.PostServiceImpl;
+import org.fludland.services.impl.PostServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

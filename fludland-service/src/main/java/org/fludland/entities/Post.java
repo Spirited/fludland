@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "posts", schema = "fludland")
@@ -41,6 +42,9 @@ public class Post {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified_at", insertable = false)
     private Timestamp modifiedAt;
+
+    @OneToMany
+    private List<Thumb> thumbs;
 
     public Integer getId() {
         return id;
