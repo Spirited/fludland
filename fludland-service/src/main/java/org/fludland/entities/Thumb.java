@@ -20,6 +20,9 @@ public class Thumb {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
+    @Version
+    private Integer version;
+
     public Integer getId() {
         return id;
     }
@@ -44,4 +47,11 @@ public class Thumb {
         this.userId = userId;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }
