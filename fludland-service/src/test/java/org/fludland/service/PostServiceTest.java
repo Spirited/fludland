@@ -100,7 +100,7 @@ class PostServiceTest {
 
     private static Post createPost() {
         Post post = new Post();
-        post.setId(1);
+        post.setId(1L);
         post.setTitle("Mock Title");
         post.setContent("Mock Content");
         post.setUserId(999);
@@ -111,7 +111,7 @@ class PostServiceTest {
 
     private static Post updatePost() {
         Post post = new Post();
-        post.setId(1);
+        post.setId(1L);
         post.setTitle("mockNewPostTitle");
         post.setContent("New Mock Content");
         post.setUserId(999);

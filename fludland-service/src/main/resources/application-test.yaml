@@ -3,9 +3,9 @@ sso:
 
 spring:
   datasource:
-#    url: jdbc:tc:postgresql:alpine
-#    username: postgres
-#    password: 123456
+    url: jdbc:tc:postgresql:alpine
+    username: postgres
+    password: 123456
     hikari:
       pool-name: Poolname-FLUDLAND
   jpa:
