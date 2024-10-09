@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 public class PostDto {
-    private final Integer id;
+    private final Long id;
     private final String title;
     private final String content;
     private final Integer userId;
@@ -16,7 +16,7 @@ public class PostDto {
     private final Instant updatedAt;
 
     @JsonCreator
-    public PostDto(@JsonProperty("id") Integer id,
+    public PostDto(@JsonProperty("id") Long id,
                    @JsonProperty("title") String title,
                    @JsonProperty("content") String content,
                    @JsonProperty("userId") Integer userId,
@@ -33,7 +33,7 @@ public class PostDto {
     }
 
     @JsonGetter
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

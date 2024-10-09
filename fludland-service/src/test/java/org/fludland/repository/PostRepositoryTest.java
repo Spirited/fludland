@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SqlGroup(@Sql({"classpath:/cleanup.sql", "classpath:/data.sql"}))
@@ -64,7 +61,7 @@ class PostRepositoryTest extends AbstractIntegrationTest {
         Post fetchedPost = postRepository.findById(1L).orElse(null);
 
         fetchedPost.setTitle("updated");
-        fetchedPost.setModifiedAt(Timestamp.from(Instant.now())); // Just test! liqubase has not execute update_modified_column_procedure.sql!!!!
+        //fetchedPost.setModifiedAt(Timestamp.from(Instant.now())); // Just for test! liqubase has not execute update_modified_column_procedure.sql!!!!
 
         Post modifiedPost = postRepository.saveAndFlush(fetchedPost);
 

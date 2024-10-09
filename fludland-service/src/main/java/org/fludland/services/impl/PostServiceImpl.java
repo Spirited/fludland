@@ -7,6 +7,8 @@ import org.fludland.service.CreatePostDto;
 import org.fludland.service.EditPostDto;
 import org.fludland.service.PostDto;
 import org.fludland.services.PostService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private static final String POST_NOT_FOUND = "Post not found";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostServiceImpl.class);
+    private static final String POST_NOT_FOUND = "Post %d not found";
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository) {
@@ -27,6 +31,7 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setUserId(postDto.getUserId());
+        post.setModifiedAt(null);
 
         Post saved = postRepository.save(post);
 
@@ -35,19 +40,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto update(Long postId, EditPostDto postDto) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(String.format(POST_NOT_FOUND, postId)));
 
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-
         Post updated = postRepository.save(post);
 
         return convert(updated);
     }
 
     @Override
-    public PostDto get(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));
+    public PostDto get(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(String.format(POST_NOT_FOUND, postId)));
         return convert(post);
     }
 

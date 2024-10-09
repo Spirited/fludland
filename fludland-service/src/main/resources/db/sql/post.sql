@@ -4,7 +4,7 @@ create table fludland.posts (
     content varchar(1000) not null,
     user_id serial not null,
     media_file_id integer,
-    created_at timestamp with time zone default current_timestamp,
+    created_at timestamp not null,
     modified_at timestamp,
 
     CONSTRAINT pk_post_id primary key (id)

@@ -3,11 +3,8 @@ package org.fludland.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "posts", schema = "fludland")
@@ -16,7 +13,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posts_id_gen")
     @SequenceGenerator(name = "posts_id_gen", sequenceName = "posts_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 255)
     @NotNull
@@ -35,22 +32,28 @@ public class Post {
     @Column(name = "media_file_id")
     private Integer mediaFileId;
 
-    @CreationTimestamp(source = SourceType.DB)
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modified_at", insertable = false)
+    @Column(name = "modified_at")
     private Timestamp modifiedAt;
 
-    @OneToMany
-    private List<Thumb> thumbs;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+        modifiedAt = null;
+    }
 
-    public Integer getId() {
+    @PreUpdate
+    protected void onModified() {
+        modifiedAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
