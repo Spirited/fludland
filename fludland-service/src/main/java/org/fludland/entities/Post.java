@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts", schema = "fludland")
@@ -37,6 +39,13 @@ public class Post {
 
     @Column(name = "modified_at")
     private Timestamp modifiedAt;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "post"
+    )
+    private List<Thumb> thumbs = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -103,5 +112,13 @@ public class Post {
 
     public void setModifiedAt(Timestamp modifiedAt) {
         this.modifiedAt = modifiedAt;
+    }
+
+    public List<Thumb> getThumbs() {
+        return thumbs;
+    }
+
+    public void setThumbs(List<Thumb> thumbs) {
+        this.thumbs = thumbs;
     }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class PostDto {
     private final Long id;
@@ -12,8 +12,8 @@ public class PostDto {
     private final String content;
     private final Integer userId;
     private final Integer mediaFileId;
-    private final Instant createdAt;
-    private final Instant updatedAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     @JsonCreator
     public PostDto(@JsonProperty("id") Long id,
@@ -21,8 +21,8 @@ public class PostDto {
                    @JsonProperty("content") String content,
                    @JsonProperty("userId") Integer userId,
                    @JsonProperty("mediaFileId") Integer mediaFileId,
-                   @JsonProperty("createdAt") Instant createdAt,
-                   @JsonProperty("updatedAt") Instant updatedAt) {
+                   @JsonProperty("createdAt") LocalDateTime createdAt,
+                   @JsonProperty("updatedAt") LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -58,11 +58,11 @@ public class PostDto {
     }
 
     @JsonGetter
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
     @JsonGetter
-    public Instant getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 }

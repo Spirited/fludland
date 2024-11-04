@@ -10,33 +10,30 @@ public class Thumb {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "thumbs_id_gen")
     @SequenceGenerator(name = "thumbs_id_gen", sequenceName = "thumbs_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @NotNull
-    @Column(name = "post_id", nullable = false)
-    private Integer postId;
+    @ManyToOne
+    @JoinColumn
+    private Post post;
 
     @NotNull
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Version
-    private Integer version;
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Integer getUserId() {
@@ -45,13 +42,5 @@ public class Thumb {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 }

@@ -33,7 +33,9 @@ public class PostServiceImpl implements PostService {
         post.setUserId(postDto.getUserId());
         post.setModifiedAt(null);
 
+        LOGGER.debug("Try to create a new post: {}", post);
         Post saved = postRepository.save(post);
+        LOGGER.debug("Post created: {}", saved);
 
         return convert(saved);
     }
@@ -44,7 +46,10 @@ public class PostServiceImpl implements PostService {
 
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
+
+        LOGGER.debug("Try to update a post: {}", post);
         Post updated = postRepository.save(post);
+        LOGGER.debug("Post updated: {}", updated);
 
         return convert(updated);
     }
@@ -52,19 +57,23 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto get(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(String.format(POST_NOT_FOUND, postId)));
+        LOGGER.debug("Fetched post by id={}: {}", postId, post);
+
         return convert(post);
     }
 
     @Transactional
     @Override
     public boolean delete(Long id) {
+        LOGGER.debug("Deleting post by id={}", id);
+
         if (postRepository.existsById(id)) {
             postRepository.deleteById(id);
         } else {
             throw new PostNotFoundException(POST_NOT_FOUND);
         }
 
-        return postRepository.findById(id).orElse(null) == null;
+        return postRepository.existsById(id);
     }
 
     private static PostDto convert(Post post) {
@@ -72,8 +81,8 @@ public class PostServiceImpl implements PostService {
                 post.getId(), post.getTitle(), post.getContent(),
                 post.getUserId(),
                 post.getMediaFileId(),
-                post.getCreatedAt() != null ? post.getCreatedAt().toInstant() : null,
-                post.getModifiedAt() != null ? post.getModifiedAt().toInstant() : null
+                post.getCreatedAt() != null ? post.getCreatedAt().toLocalDateTime() : null,
+                post.getModifiedAt() != null ? post.getModifiedAt().toLocalDateTime(): null
         );
     }
 }

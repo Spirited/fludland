@@ -4,13 +4,10 @@ import org.fludland.entities.Post;
 import org.fludland.repositories.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SqlGroup(@Sql({"classpath:/cleanup.sql", "classpath:/data.sql"}))
-class PostRepositoryTest extends AbstractIntegrationTest {
+class PostRepositoryTest extends AbstractDataIntegrationTest {
     @Autowired
     private PostRepository postRepository;
 
@@ -19,6 +16,7 @@ class PostRepositoryTest extends AbstractIntegrationTest {
         Post post = new Post();
         post.setTitle("title");
         post.setContent("content");
+        post.setUserId(1);
 
         Post saved = postRepository.save(post);
 
@@ -61,7 +59,6 @@ class PostRepositoryTest extends AbstractIntegrationTest {
         Post fetchedPost = postRepository.findById(1L).orElse(null);
 
         fetchedPost.setTitle("updated");
-        //fetchedPost.setModifiedAt(Timestamp.from(Instant.now())); // Just for test! liqubase has not execute update_modified_column_procedure.sql!!!!
 
         Post modifiedPost = postRepository.saveAndFlush(fetchedPost);
 

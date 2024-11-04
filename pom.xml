@@ -93,5 +93,6 @@
         <module>fludland-service</module>
         <module>api-gateway</module>
         <module>common</module>
+        <module>file-service</module>
     </modules>
 </project>
