@@ -5,7 +5,9 @@ import org.fludland.repositories.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class PostRepositoryTest extends AbstractDataIntegrationTest {
     @Autowired
@@ -95,5 +97,13 @@ class PostRepositoryTest extends AbstractDataIntegrationTest {
 
         Post deleted = postRepository.findById(1L).orElse(null);
         assertThat(deleted).isNull();
+    }
+
+    @Test
+    void test_fetch_all_posts_expected_eight_records() {
+        List<Post> all = postRepository.findAll();
+
+        assertThat(all).isNotNull();
+        assertThat(all).hasSize(8);
     }
 }

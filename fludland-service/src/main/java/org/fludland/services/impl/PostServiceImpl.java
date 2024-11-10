@@ -1,5 +1,7 @@
 package org.fludland.services.impl;
 
+import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorResponse;
 import org.fludland.entities.Post;
 import org.fludland.exceptions.PostNotFoundException;
 import org.fludland.repositories.PostRepository;
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -62,9 +66,19 @@ public class PostServiceImpl implements PostService {
         return convert(post);
     }
 
+    @Override
+    public List<PostDto> getAllPostsByUserId(Integer userId) {
+        return postRepository.findByUserId(userId).stream().map(PostServiceImpl::convert).toList();
+    }
+
+    @Override
+    public List<PostDto> getAll() {
+        return postRepository.findAll().stream().map(PostServiceImpl::convert).toList();
+    }
+
     @Transactional
     @Override
-    public boolean delete(Long id) {
+    public ErrorResponse delete(Long id) {
         LOGGER.debug("Deleting post by id={}", id);
 
         if (postRepository.existsById(id)) {
@@ -73,7 +87,7 @@ public class PostServiceImpl implements PostService {
             throw new PostNotFoundException(POST_NOT_FOUND);
         }
 
-        return postRepository.existsById(id);
+        return !postRepository.existsById(id) ? new ErrorResponse(ErrorCodes.SUCCESS_ERROR_CODE) : new ErrorResponse(ErrorCodes.INTERNAL_ERROR);
     }
 
     private static PostDto convert(Post post) {

@@ -1,5 +1,6 @@
 package org.fludland.service;
 
+import org.fludland.common.ErrorResponse;
 import org.fludland.entities.Post;
 import org.fludland.exceptions.PostNotFoundException;
 import org.fludland.repositories.PostRepository;
@@ -12,9 +13,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -85,9 +87,17 @@ class PostServiceTest {
         when(mockPostRepository.existsById(any(Long.class))).thenReturn(Boolean.TRUE);
         when(mockPostRepository.findById(POST_ID)).thenReturn(Optional.empty());
 
-        boolean deleted = postService.delete(POST_ID);
+        ErrorResponse deleted = postService.delete(POST_ID);
 
-        assertThat(deleted).isTrue();
+        assertThat(deleted).isNotNull();
+    }
+
+    @Test
+    void test_fetch_all_posts_expect_five_posts() {
+        when((mockPostRepository.findAll())).thenReturn(List.of(createPost(), createPost(), createPost()));
+
+        assertThat(postService.getAll()).isNotNull();
+        assertThat(postService.getAll()).hasSize(3);
     }
 
     private static CreatePostDto createPostDto() {

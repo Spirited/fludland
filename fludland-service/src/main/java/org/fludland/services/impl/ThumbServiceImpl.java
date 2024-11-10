@@ -51,6 +51,10 @@ public class ThumbServiceImpl implements ThumbService {
 
     @Override
     public long getTotalPostThumbs(long postId) {
-        return 0;
+        Post post = postRepository
+                .findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(String.format(POST_NOT_FOUND, postId)));
+
+        return thumbRepository.countAllByPost(post);
     }
 }

@@ -1,5 +1,6 @@
 package org.fludland.controllers;
 
+import org.fludland.common.ErrorResponse;
 import org.fludland.service.CreatePostDto;
 import org.fludland.service.EditPostDto;
 import org.fludland.service.PostDto;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -34,9 +34,14 @@ public class PostController {
         return ResponseEntity.ok(postService.get(Long.parseLong(id)));
     }
 
+    @GetMapping(path = "/users/{userId}")
+    public ResponseEntity<List<PostDto>> getPostByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(postService.getAllPostsByUserId(Integer.parseInt(userId)));
+    }
+
     @GetMapping
     public ResponseEntity<List<PostDto>> getAllPosts() {
-        return ResponseEntity.ok(Collections.emptyList());
+        return ResponseEntity.ok(postService.getAll());
     }
 
     @PutMapping(path = "/{id}")
@@ -45,7 +50,7 @@ public class PostController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Boolean> deletePost(@PathVariable String id) {
+    public ResponseEntity<ErrorResponse> deletePost(@PathVariable String id) {
         return ResponseEntity.ok(postService.delete(Long.parseLong(id)));
     }
 
@@ -54,8 +59,8 @@ public class PostController {
         thumbService.putPostThumb(Long.parseLong(postId), Integer.parseInt(userId));
     }
 
-    @GetMapping("/{postId}/thumbs")
+    @GetMapping("/{postId}/thumbs/total")
     public Long totalPostThumbs(@PathVariable String postId) {
-        return 0L;
+        return thumbService.getTotalPostThumbs(Long.parseLong(postId));
     }
 }
