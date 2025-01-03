@@ -7,7 +7,7 @@ spring:
     username: postgres
     password: 123456
     hikari:
-      pool-name: Poolname-FLUDLAND
+      pool-name: Fludland-Service-Pool
   jpa:
     hibernate:
       ddl-auto: create-drop
