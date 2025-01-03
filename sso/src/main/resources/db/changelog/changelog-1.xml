@@ -19,4 +19,29 @@
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/create_token_table.sql" />
     </changeSet>
+
+    <changeSet id="create_group_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/user_group.sql" />
+    </changeSet>
+
+    <changeSet id="create_role_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/role.sql" />
+    </changeSet>
+
+    <changeSet id="create_permission_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/permission.sql" />
+    </changeSet>
+
+    <changeSet id="create_role_has_permission_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/role_has_permission.sql" />
+    </changeSet>
+
+    <changeSet id="create_role_has_user_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/role_has_user.sql" />
+    </changeSet>
 </databaseChangeLog>
