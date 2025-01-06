@@ -1,0 +1,62 @@
+.post-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.post-nickname {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.post-body {
+    margin-bottom: 16px;
+}
+
+.post-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.post-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.post-footer-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.post-footer-item span {
+    margin-left: 6px;
+}
