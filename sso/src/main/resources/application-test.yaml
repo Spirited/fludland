@@ -1,4 +1,4 @@
-sso:
+application:
   db-schema-name: sso
 
 spring:
@@ -13,5 +13,5 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        default_schema: ${sso.db-schema-name}
+        default_schema: ${application.db-schema-name}
 

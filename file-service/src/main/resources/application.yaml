@@ -18,7 +18,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: ${sso.db-schema-name}
+        default_schema: ${application.db-schema-name}
         show_sql: true
         format_sql: true
     show-sql: on
@@ -30,3 +30,6 @@ spring:
 
 server:
   port: 8083
+  tomcat:
+    max-http-form-post-size: 4096
+    max-swallow-size: 4096

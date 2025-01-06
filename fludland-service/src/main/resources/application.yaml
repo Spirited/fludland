@@ -1,4 +1,4 @@
-sso:
+application:
   db-schema-name: fludland
 
 
@@ -8,7 +8,7 @@ preliquibase:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=${sso.db-schema-name}
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=${application.db-schema-name}
     username: postgres
     password: 123456
     hikari:
@@ -18,7 +18,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: ${sso.db-schema-name}
+        default_schema: ${application.db-schema-name}
         show_sql: true
         format_sql: true
     show-sql: on
