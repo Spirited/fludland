@@ -3,23 +3,25 @@ package org.fludland.userservice.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "userprofile")
 public class UserProfile {
     @Id
     private Long id;
     @Column
     private String username;
-    @Column
+    @Column(name = "firstname")
     private String firstName;
-    @Column
+    @Column(name = "lastname")
     private String lastName;
     @Column
     private String email;
     @Column
     private String phone;
-    @Column
-    private Long logoId;
+    @Column(name = "logoid")
+    private Integer logoImageId;
 
     public Long getId() {
         return id;
@@ -69,11 +71,11 @@ public class UserProfile {
         this.phone = phone;
     }
 
-    public Long getLogoId() {
-        return logoId;
+    public Integer getLogoImageId() {
+        return logoImageId;
     }
 
-    public void setLogoId(Long logoId) {
-        this.logoId = logoId;
+    public void setLogoImageId(Integer logoId) {
+        this.logoImageId = logoId;
     }
 }
