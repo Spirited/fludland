@@ -1,7 +1,8 @@
 package org.fludland.sso.service;
 
-import org.fludland.sso.dtos.SuccessfulRegistration;
 import org.fludland.sso.dtos.LoginCreateDto;
+import org.fludland.sso.dtos.SuccessfulResult;
+import org.fludland.sso.entities.Profile;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
 import org.fludland.sso.repository.ProfileRepository;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 class AuthorizationServiceTest {
-    private UserRepository moockUserRepository;
+    private UserRepository mockUserRepository;
     private ProfileRepository mockProfileRepository;
     private TokenUtils mockTokenUtils;
 
@@ -31,20 +32,23 @@ class AuthorizationServiceTest {
 
     @BeforeEach
     public void init() {
-        moockUserRepository = mock(UserRepository.class);
-        mockProfileRepository = mock(ProfileRepository.class);
         mockTokenUtils = mock(TokenUtils.class);
-        authorizationService = new AuthorizationServiceImpl(moockUserRepository, mockProfileRepository, mockTokenUtils);
+        mockUserRepository = mock(UserRepository.class);
+        mockProfileRepository = mock(ProfileRepository.class);
+        authorizationService = new AuthorizationServiceImpl(mockUserRepository, mockProfileRepository, mockTokenUtils);
     }
 
     @Test
     void test_when_passed_user_auth_data_expected_new_user() {
         LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar");
 
+        Profile profile = new Profile();
 
         when(mockTokenUtils.generateJWT(anyString())).thenReturn("12345");
+        when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+        when(mockProfileRepository.save(profile)).thenReturn(profile);
 
-        SuccessfulRegistration register = authorizationService.register(loginCreateDto);
+        SuccessfulResult register = authorizationService.register(loginCreateDto);
         assertThat(register.getToken()).isNotNull().isEqualTo("12345");
     }
 
@@ -54,7 +58,7 @@ class AuthorizationServiceTest {
 
         User user = new User();
         user.setUsername("foo");
-        when(moockUserRepository.findByUsername("foo")).thenReturn(Optional.of(user));
+        when(mockUserRepository.findByUsername("foo")).thenReturn(Optional.of(user));
 
         UsernameAlreadyExistsException assertedThrows = assertThrows(UsernameAlreadyExistsException.class, () -> authorizationService.register(loginCreateDto));
         assertThat(assertedThrows.getMessage()).contains("foo");

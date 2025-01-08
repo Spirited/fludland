@@ -1,10 +1,11 @@
 package org.fludland.sso.service.impl;
 
-import org.fludland.sso.dtos.SuccessfulRegistration;
+import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.entities.Profile;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
+import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
 import org.fludland.sso.repository.ProfileRepository;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.AuthorizationService;
@@ -31,13 +32,19 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public String login(String username, String password) {
-        return "";
+    public SuccessfulResult login(LoginCreateDto loginCreateDto) {
+        User user = userRepository.findByUsername(loginCreateDto.getUsername()).orElseThrow(WrongLoginOrPasswordException::new);
+
+        if (!loginCreateDto.getPassword().equals(user.getPassword())) {
+            throw new WrongLoginOrPasswordException();
+        }
+
+        return new SuccessfulResult(tokenUtils.generateJWT(loginCreateDto.getUsername()));
     }
 
     @Transactional
     @Override
-    public SuccessfulRegistration register(LoginCreateDto login) {
+    public SuccessfulResult register(LoginCreateDto login) {
         Optional<User> byUsername = userRepository.findByUsername(login.getUsername());
 
         if (byUsername.isPresent()) {
@@ -53,7 +60,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         profileRepository.save(profile);
 
-        return new SuccessfulRegistration(tokenUtils.generateJWT(user.getUsername()));
+        return new SuccessfulResult(tokenUtils.generateJWT(user.getUsername()));
     }
 
     @Override
