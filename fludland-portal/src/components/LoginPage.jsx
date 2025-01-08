@@ -1,14 +1,46 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 import "../css/LoginPage.css"
 
 const LoginPage = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-        console.log("Email: ", email);
+        console.log("Login: ", username);
         console.log("Password: ", password);
+
+        console.log("Body", JSON.stringify({username, password}));
+
+        try {
+            const response = await fetch("http://localhost:8084/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({username, password})
+            });
+
+            console.log(response);
+
+            if (response.status === 200) {
+                const data = await response.json();
+                console.log("Token: ", data);
+                navigate("/main");
+            } else {
+                const errorData = await response.json();
+                setError(errorData || "Login failed. Please try again.");
+                console.log(error)
+            }
+        } catch (err) {
+            setError("Something went wrong.Please try again later. " + err)
+            console.log(error);
+        }
+
+        console.log("asdasdasd")
     }
 
     return (
@@ -20,8 +52,8 @@ const LoginPage = () => {
                     <input
                         type="email"
                         id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                         className="input"
                     />
