@@ -1,5 +1,6 @@
 package org.fludland.sso.service.impl;
 
+import org.fludland.sso.dtos.AuthorizationDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.entities.Profile;
@@ -32,14 +33,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public SuccessfulResult login(LoginCreateDto loginCreateDto) {
-        User user = userRepository.findByUsername(loginCreateDto.getUsername()).orElseThrow(WrongLoginOrPasswordException::new);
+    public SuccessfulResult login(AuthorizationDto authorizationDto) {
+        User user = userRepository.findByUsername(authorizationDto.getUsername()).orElseThrow(WrongLoginOrPasswordException::new);
 
-        if (!loginCreateDto.getPassword().equals(user.getPassword())) {
+        if (!authorizationDto.getPassword().equals(user.getPassword())) {
             throw new WrongLoginOrPasswordException();
         }
 
-        return new SuccessfulResult(tokenUtils.generateJWT(loginCreateDto.getUsername()));
+        return new SuccessfulResult(tokenUtils.generateJWT(authorizationDto.getUsername()));
     }
 
     @Transactional

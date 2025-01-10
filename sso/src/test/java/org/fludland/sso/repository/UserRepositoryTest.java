@@ -6,13 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @SqlGroup(@Sql({"classpath:/cleanup.sql", "classpath:/data.sql"}))
-class UserRepositoryTest extends AbstractIntegrationTest {
+class UserRepositoryTest extends AbstractDataIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
@@ -55,6 +56,7 @@ class UserRepositoryTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Transactional
     void test_save_users_profile_then_return_not_null_profile() {
         Profile profile = new Profile();
         profile.setFirstName("name");

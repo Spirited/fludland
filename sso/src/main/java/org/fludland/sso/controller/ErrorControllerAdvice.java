@@ -3,6 +3,7 @@ package org.fludland.sso.controller;
 import org.fludland.common.ErrorCodes;
 import org.fludland.common.ErrorResponse;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
+import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,5 +21,13 @@ public class ErrorControllerAdvice {
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(ErrorCodes.USER_ALREADY_EXISTS_ERROR));
+    }
+
+    @ExceptionHandler(WrongLoginOrPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleWrongLoginOrPasswordException(WrongLoginOrPasswordException ex) { // 403
+        LOGGER.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse(ErrorCodes.WRONG_LOGIN_OR_PASSWORD_ERROR));
     }
 }

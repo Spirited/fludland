@@ -2,6 +2,7 @@ package org.fludland.api.service.impl;
 
 import org.fludland.api.config.SSOClient;
 import org.fludland.api.service.AuthService;
+import org.fludland.sso.dtos.AuthorizationDto;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public SuccessfulResult login(LoginCreateDto loginCreateDto) {
+    public SuccessfulResult login(AuthorizationDto loginCreateDto) {
         return ssoClient.login(loginCreateDto);
+    }
+
+    @Override
+    public SuccessfulResult register(LoginCreateDto loginCreateDto) {
+        return ssoClient.register(loginCreateDto);
     }
 }

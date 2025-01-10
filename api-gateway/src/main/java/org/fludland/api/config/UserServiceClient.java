@@ -1,7 +1,8 @@
 package org.fludland.api.config;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.cloud.openfeign.FeignClient;
 
-@Configuration
+@FeignClient(value = "user-service", url = "${api.user-service.host}")
 public class UserServiceClient {
+
 }

@@ -1,5 +1,6 @@
 package org.fludland.sso.controller;
 
+import org.fludland.sso.dtos.AuthorizationDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.service.AuthorizationService;
@@ -16,9 +17,9 @@ public class AuthController {
         this.authorizationService = authorizationService;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173") //TODO: move it to security part
+    //@CrossOrigin(origins = "http://localhost:5173") //TODO: move it to security part
     @PostMapping("/login")
-    public ResponseEntity<SuccessfulResult> login(@RequestBody LoginCreateDto dto) {
+    public ResponseEntity<SuccessfulResult> login(@RequestBody AuthorizationDto dto) {
         return ResponseEntity.ok(authorizationService.login(dto));
     }
 

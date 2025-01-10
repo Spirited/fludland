@@ -40,7 +40,7 @@ class AuthorizationServiceTest {
 
     @Test
     void test_when_passed_user_auth_data_expected_new_user() {
-        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar");
+        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null, null, null);
 
         Profile profile = new Profile();
 
@@ -54,7 +54,7 @@ class AuthorizationServiceTest {
 
     @Test
     void test_when_username_already_exists_expected_exception() {
-        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar");
+        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null, null, null);
 
         User user = new User();
         user.setUsername("foo");
