@@ -52,6 +52,14 @@ public class User {
         this.password = password;
     }
 
+    public UserAccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(UserAccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
     public Profile getProfile() {
         return profile;
     }
