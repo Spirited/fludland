@@ -2,10 +2,8 @@ package org.fludland.sso.service;
 
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
-import org.fludland.sso.entities.Profile;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
-import org.fludland.sso.repository.ProfileRepository;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.impl.AuthorizationServiceImpl;
 import org.fludland.sso.utils.TokenUtils;
@@ -25,7 +23,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 class AuthorizationServiceTest {
     private UserRepository mockUserRepository;
-    private ProfileRepository mockProfileRepository;
     private TokenUtils mockTokenUtils;
 
     private AuthorizationService authorizationService;
@@ -34,19 +31,17 @@ class AuthorizationServiceTest {
     public void init() {
         mockTokenUtils = mock(TokenUtils.class);
         mockUserRepository = mock(UserRepository.class);
-        mockProfileRepository = mock(ProfileRepository.class);
-        authorizationService = new AuthorizationServiceImpl(mockUserRepository, mockProfileRepository, mockTokenUtils);
+        authorizationService = new AuthorizationServiceImpl(
+                mockUserRepository,
+                mockTokenUtils);
     }
 
     @Test
     void test_when_passed_user_auth_data_expected_new_user() {
-        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null, null, null);
-
-        Profile profile = new Profile();
+        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null);
 
         when(mockTokenUtils.generateJWT(anyString())).thenReturn("12345");
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
-        when(mockProfileRepository.save(profile)).thenReturn(profile);
 
         SuccessfulResult register = authorizationService.register(loginCreateDto);
         assertThat(register.getToken()).isNotNull().isEqualTo("12345");
@@ -54,7 +49,7 @@ class AuthorizationServiceTest {
 
     @Test
     void test_when_username_already_exists_expected_exception() {
-        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null, null, null);
+        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null);
 
         User user = new User();
         user.setUsername("foo");

@@ -1,6 +1,5 @@
 package org.fludland.sso.repository;
 
-import org.fludland.sso.entities.Profile;
 import org.fludland.sso.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,19 +57,13 @@ class UserRepositoryTest extends AbstractDataIntegrationTest {
     @Test
     @Transactional
     void test_save_users_profile_then_return_not_null_profile() {
-        Profile profile = new Profile();
-        profile.setFirstName("name");
-
         User user = new User();
         user.setUsername("test");
         user.setPassword("password");
-        user.setProfile(profile);
         User saved = userRepository.save(user);
 
         assertThat(saved).isNotNull();
         assertThat(saved.getUsername()).isEqualTo("test");
         assertThat(saved.getPassword()).isEqualTo("password");
-        assertThat(saved.getProfile()).isNotNull();
-        assertThat(saved.getProfile().getFirstName()).isEqualTo("name");
     }
 }

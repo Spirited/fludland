@@ -1,4 +1,4 @@
-package org.fludland.sso;
+package org.fludland.userservice;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.ClassRule;
@@ -21,7 +21,7 @@ public abstract class AbstractIntegrationTest {
     @ClassRule
     @Container
     public static PostgreSQLContainer<?> postgresqlContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres"))
-            .withDatabaseName("sso")
+            .withDatabaseName("userservice")
             .withUsername("postgres")
             .withPassword("123456");
 

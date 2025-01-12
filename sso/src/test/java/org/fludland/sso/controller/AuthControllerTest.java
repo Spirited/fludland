@@ -30,7 +30,7 @@ class AuthControllerTest extends AbstractWebIntegrationTest {
 
     @Test
     void test_register_new_user_expect_not_null_token_response() throws Exception {
-        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null, null, null);
+        LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null);
 
         ResultActions resultActions = mockMvc.perform(post("/register")
                         .content(Objects.requireNonNull(asJsonString(loginCreateDto))).contentType("application/json"))

@@ -1,27 +1,32 @@
 package org.fludland.userservice.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "userprofile")
 public class UserProfile {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userprofile_id_gen")
+    @SequenceGenerator(name = "userprofile_id_gen", sequenceName = "userprofile_id_seq", allocationSize = 1)
     private Long id;
-    @Column
-    private String username;
+
     @Column(name = "firstname")
     private String firstName;
+
     @Column(name = "lastname")
     private String lastName;
+
     @Column
     private String email;
+
     @Column
     private String phone;
+
+    @Column(name = "userid")
+    private Long userId;
+
     @Column(name = "logoid")
-    private Integer logoImageId;
+    private Long logoImageId;
 
     public Long getId() {
         return id;
@@ -29,14 +34,6 @@ public class UserProfile {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstName() {
@@ -71,11 +68,19 @@ public class UserProfile {
         this.phone = phone;
     }
 
-    public Integer getLogoImageId() {
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getLogoImageId() {
         return logoImageId;
     }
 
-    public void setLogoImageId(Integer logoId) {
-        this.logoImageId = logoId;
+    public void setLogoImageId(Long logoImageId) {
+        this.logoImageId = logoImageId;
     }
 }

@@ -3,11 +3,9 @@ package org.fludland.sso.service.impl;
 import org.fludland.sso.dtos.AuthorizationDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
-import org.fludland.sso.entities.Profile;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
 import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
-import org.fludland.sso.repository.ProfileRepository;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.AuthorizationService;
 import org.fludland.sso.utils.TokenUtils;
@@ -20,15 +18,12 @@ import java.util.Optional;
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final UserRepository userRepository;
-    private final ProfileRepository profileRepository;
     private final TokenUtils tokenUtils;
 
     @Autowired
     public AuthorizationServiceImpl(final UserRepository userRepository,
-                                    final ProfileRepository profileRepository,
                                     final TokenUtils tokenUtils) {
         this.userRepository = userRepository;
-        this.profileRepository = profileRepository;
         this.tokenUtils = tokenUtils;
     }
 
@@ -55,11 +50,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         User user = new User();
         user.setUsername(login.getUsername());
         user.setPassword(login.getPassword());
-
-        Profile profile = new Profile();
-        profile.setUser(user);
-
-        profileRepository.save(profile);
 
         return new SuccessfulResult(tokenUtils.generateJWT(user.getUsername()));
     }

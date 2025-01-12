@@ -7,13 +7,17 @@ import org.fludland.sso.AbstractIntegrationTest;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
+@SqlGroup(@Sql({"classpath:/cleanup.sql"}))
 public abstract class AbstractWebIntegrationTest extends AbstractIntegrationTest {
     final ObjectMapper mapper = new ObjectMapper();
 
