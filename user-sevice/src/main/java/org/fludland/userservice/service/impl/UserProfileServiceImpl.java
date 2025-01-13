@@ -7,6 +7,10 @@ import org.fludland.userservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileRepository userProfileRepository;
@@ -17,16 +21,25 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public String createProfile(CreateProfileDto userProfile) {
+    public CreateProfileDto createProfile(CreateProfileDto userProfile) {
         UserProfile userProfileEntity = new UserProfile();
+
         userProfileEntity.setUserId(userProfile.getUserId());
         userProfileEntity.setFirstName(userProfile.getFirstName());
         userProfileEntity.setLastName(userProfile.getLastName());
+        userProfileEntity.setDateOfBirth(
+                userProfile.getDateOfBirth() != null
+                        ? Date.valueOf(userProfile.getDateOfBirth())
+                        : null
+        );
+        userProfileEntity.setGender(userProfile.getGender());
         userProfileEntity.setEmail(userProfile.getEmail());
+        userProfileEntity.setPhone(userProfile.getPhoneNumber());
+        userProfileEntity.setLogoImageId(userProfile.getLogoId());
 
-        userProfileRepository.save(userProfileEntity);
+        UserProfile saved = userProfileRepository.save(userProfileEntity);
 
-        return "Success";
+        return convertUserProfileToCreateProfileDto(saved);
     }
 
     @Override
@@ -42,5 +55,20 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfile getProfile(Integer profileId) {
         return null;
+    }
+
+    private CreateProfileDto convertUserProfileToCreateProfileDto(UserProfile userProfile) {
+        return new CreateProfileDto(
+                userProfile.getUserId(),
+                userProfile.getFirstName(),
+                userProfile.getLastName(),
+                userProfile.getDateOfBirth()
+                        != null ? LocalDate.ofInstant(userProfile.getDateOfBirth().toInstant(), ZoneId.systemDefault())
+                        : null,
+                userProfile.getGender(),
+                userProfile.getPhone(),
+                userProfile.getEmail(),
+                userProfile.getLogoImageId()
+        );
     }
 }

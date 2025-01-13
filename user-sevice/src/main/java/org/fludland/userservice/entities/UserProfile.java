@@ -1,6 +1,9 @@
 package org.fludland.userservice.entities;
 
 import jakarta.persistence.*;
+import org.fludland.userservcie.enums.Gender;
+
+import java.sql.Date;
 
 @Entity
 @Table(name = "userprofile")
@@ -15,6 +18,13 @@ public class UserProfile {
 
     @Column(name = "lastname")
     private String lastName;
+
+    @Column(name = "birthday")
+    private Date dateOfBirth;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column
     private String email;
@@ -50,6 +60,22 @@ public class UserProfile {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {

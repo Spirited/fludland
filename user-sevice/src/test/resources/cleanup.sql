@@ -1,3 +1,5 @@
+set search_path to userservice;
+
 begin transaction;
 
 truncate table userservice.userprofile CASCADE ;
