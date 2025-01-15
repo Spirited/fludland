@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
@@ -63,7 +61,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 userProfile.getFirstName(),
                 userProfile.getLastName(),
                 userProfile.getDateOfBirth()
-                        != null ? LocalDate.ofInstant(userProfile.getDateOfBirth().toInstant(), ZoneId.systemDefault())
+                        != null ? userProfile.getDateOfBirth().toLocalDate()
                         : null,
                 userProfile.getGender(),
                 userProfile.getPhone(),

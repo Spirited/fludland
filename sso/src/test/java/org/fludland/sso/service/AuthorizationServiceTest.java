@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -37,11 +37,17 @@ class AuthorizationServiceTest {
     }
 
     @Test
-    void test_when_passed_user_auth_data_expected_new_user() {
+    void test_when_passed_user_auth_data_expected_new_user_and_token() {
         LoginCreateDto loginCreateDto = new LoginCreateDto("foo", "bar", null);
 
-        when(mockTokenUtils.generateJWT(anyString())).thenReturn("12345");
+        User saved = new User();
+        saved.setUsername(loginCreateDto.getUsername());
+        saved.setPassword(loginCreateDto.getPassword());
+        saved.setId(1L);
+
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+        when(mockUserRepository.save(any())).thenReturn(saved);
+        when(mockTokenUtils.generateJWT(anyLong(), anyString())).thenReturn("12345");
 
         SuccessfulResult register = authorizationService.register(loginCreateDto);
         assertThat(register.getToken()).isNotNull().isEqualTo("12345");
@@ -55,7 +61,10 @@ class AuthorizationServiceTest {
         user.setUsername("foo");
         when(mockUserRepository.findByUsername("foo")).thenReturn(Optional.of(user));
 
-        UsernameAlreadyExistsException assertedThrows = assertThrows(UsernameAlreadyExistsException.class, () -> authorizationService.register(loginCreateDto));
+        UsernameAlreadyExistsException assertedThrows = assertThrows(
+                UsernameAlreadyExistsException.class,
+                () -> authorizationService.register(loginCreateDto)
+        );
         assertThat(assertedThrows.getMessage()).contains("foo");
     }
 }

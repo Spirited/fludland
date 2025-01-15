@@ -22,7 +22,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Autowired
     public AuthorizationServiceImpl(final UserRepository userRepository,
-                                    final TokenUtils tokenUtils) {
+                                    final TokenUtils tokenUtils
+    ) {
         this.userRepository = userRepository;
         this.tokenUtils = tokenUtils;
     }
@@ -35,7 +36,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new WrongLoginOrPasswordException();
         }
 
-        return new SuccessfulResult(tokenUtils.generateJWT(authorizationDto.getUsername()));
+        return new SuccessfulResult(tokenUtils.generateJWT(user.getId(), authorizationDto.getUsername()));
     }
 
     @Transactional
@@ -51,7 +52,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         user.setUsername(login.getUsername());
         user.setPassword(login.getPassword());
 
-        return new SuccessfulResult(tokenUtils.generateJWT(user.getUsername()));
+        User saved = userRepository.save(user);
+
+        return new SuccessfulResult(tokenUtils.generateJWT(saved.getId(), saved.getUsername()));
     }
 
     @Override

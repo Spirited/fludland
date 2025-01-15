@@ -1,8 +1,8 @@
 package org.fludland.api.controller;
 
+import org.fludland.api.dto.CreateNewAccount;
 import org.fludland.api.service.AuthService;
 import org.fludland.sso.dtos.AuthorizationDto;
-import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<SuccessfulResult> register(@RequestBody LoginCreateDto loginCreateDto) {
-        return ResponseEntity.ok(authService.register(loginCreateDto));
+    public ResponseEntity<SuccessfulResult> register(@RequestBody CreateNewAccount createNewAccount) {
+        return ResponseEntity.ok(authService.register(createNewAccount));
     }
 }

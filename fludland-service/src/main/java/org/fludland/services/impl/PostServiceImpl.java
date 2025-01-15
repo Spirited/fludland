@@ -84,10 +84,12 @@ public class PostServiceImpl implements PostService {
         if (postRepository.existsById(id)) {
             postRepository.deleteById(id);
         } else {
-            throw new PostNotFoundException(POST_NOT_FOUND);
+            throw new PostNotFoundException(String.format(POST_NOT_FOUND, id));
         }
 
-        return !postRepository.existsById(id) ? new ErrorResponse(ErrorCodes.SUCCESS_ERROR_CODE) : new ErrorResponse(ErrorCodes.INTERNAL_ERROR);
+        return !postRepository.existsById(id)
+                ? new ErrorResponse(ErrorCodes.SUCCESS_ERROR_CODE)
+                : new ErrorResponse(ErrorCodes.INTERNAL_ERROR);
     }
 
     private static PostDto convert(Post post) {

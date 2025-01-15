@@ -1,9 +1,9 @@
 api:
   fludland:
     host: localhost:8081
-  user-service:
-    host: localhost:8082
   fileservice:
     host: localhost:8083
   sso:
     host: localhost:8084
+  user-service:
+    host: localhost:8085

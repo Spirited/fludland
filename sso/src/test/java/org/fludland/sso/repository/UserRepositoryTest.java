@@ -8,6 +8,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -65,5 +66,13 @@ class UserRepositoryTest extends AbstractDataIntegrationTest {
         assertThat(saved).isNotNull();
         assertThat(saved.getUsername()).isEqualTo("test");
         assertThat(saved.getPassword()).isEqualTo("password");
+    }
+
+    @Test
+    void test_find_user_by_username_expected_not_null_result() {
+        Optional<User> byUsername = userRepository.findByUsername("super-user");
+
+        assertThat(byUsername).isNotNull();
+        assertThat(byUsername.isPresent()).isTrue();
     }
 }

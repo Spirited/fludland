@@ -19,9 +19,11 @@ public final class TokenUtils {
     private static final String SECRET = "mySecretKey";  // Secret key for signing JWT
     private static final long EXPIRATION_TIME = 86400000;
 
-    public String generateJWT(String username) {
+    public String generateJWT(Long userId, String username) {
+
         return JWT.create()
                 .withSubject(username)  // Username or user ID
+                .withClaim("userid", userId)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))  // Expiration time
                 .sign(Algorithm.HMAC256(SECRET));
@@ -38,4 +40,5 @@ public final class TokenUtils {
             return null;  // Invalid token
         }
     }
+
 }
