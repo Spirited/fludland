@@ -1,13 +1,11 @@
 package org.fludland.userservice.controller;
 
 import org.fludland.userservcie.CreateProfileDto;
+import org.fludland.userservcie.OriginalProfileDto;
 import org.fludland.userservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/profiles")
@@ -22,5 +20,10 @@ public class UserProfileController {
     @PostMapping
     public ResponseEntity<CreateProfileDto> createUserProfile(@RequestBody final CreateProfileDto createProfileDto) {
         return ResponseEntity.ok(userProfileService.createProfile(createProfileDto));
+    }
+
+    @GetMapping(path = "/{userId}")
+    public ResponseEntity<OriginalProfileDto> getUserProfile(@PathVariable final Long userId) {
+        return ResponseEntity.ok(userProfileService.getProfileByUserId(userId));
     }
 }

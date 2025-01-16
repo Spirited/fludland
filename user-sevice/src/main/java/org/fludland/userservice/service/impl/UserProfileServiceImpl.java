@@ -1,7 +1,9 @@
 package org.fludland.userservice.service.impl;
 
 import org.fludland.userservcie.CreateProfileDto;
+import org.fludland.userservcie.OriginalProfileDto;
 import org.fludland.userservice.entities.UserProfile;
+import org.fludland.userservice.exceptions.ProfileNotFoundException;
 import org.fludland.userservice.repository.UserProfileRepository;
 import org.fludland.userservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,25 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile getProfile(Integer profileId) {
-        return null;
+    public OriginalProfileDto getProfileByUserId(Long userId) {
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(ProfileNotFoundException::new);
+
+        return convertUserProfileToProfileDto(profile);
+    }
+
+    private OriginalProfileDto convertUserProfileToProfileDto(UserProfile userProfile) {
+        return new OriginalProfileDto(
+                userProfile.getUserId(),
+                userProfile.getFirstName(),
+                userProfile.getLastName(),
+                userProfile.getDateOfBirth()
+                        != null ? userProfile.getDateOfBirth().toLocalDate()
+                        : null,
+                userProfile.getGender(),
+                userProfile.getPhone(),
+                userProfile.getEmail(),
+                userProfile.getLogoImageId()
+        );
     }
 
     private CreateProfileDto convertUserProfileToCreateProfileDto(UserProfile userProfile) {

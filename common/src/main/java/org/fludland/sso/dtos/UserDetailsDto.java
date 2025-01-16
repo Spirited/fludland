@@ -44,4 +44,14 @@ public class UserDetailsDto {
     public LocalDateTime getLastLogin() {
         return lastLogin;
     }
+
+    @Override
+    public String toString() {
+        return "UserDetailsDto{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", createdAt=" + createdAt +
+                ", lastLogin=" + lastLogin +
+                '}';
+    }
 }

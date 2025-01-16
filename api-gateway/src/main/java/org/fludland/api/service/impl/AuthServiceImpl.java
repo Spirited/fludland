@@ -1,7 +1,7 @@
 package org.fludland.api.service.impl;
 
-import org.fludland.api.config.SSOClient;
-import org.fludland.api.config.UserServiceClient;
+import org.fludland.api.clients.SSOClient;
+import org.fludland.api.clients.UserServiceClient;
 import org.fludland.api.dto.CreateNewAccount;
 import org.fludland.api.service.AuthService;
 import org.fludland.sso.dtos.AuthorizationDto;

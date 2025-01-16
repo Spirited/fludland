@@ -41,4 +41,9 @@ public final class TokenUtils {
         }
     }
 
+    public Long extractUserIdFromToken(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return decodedJWT.getClaims().get("userid").asLong();
+    }
+
 }

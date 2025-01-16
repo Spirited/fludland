@@ -1,7 +1,7 @@
-package org.fludland.api.config;
+package org.fludland.api.clients;
 
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class FileServiceClient {
+public class FludlandServiceClient {
 }

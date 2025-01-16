@@ -1,0 +1,51 @@
+package org.fludland.api.config;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.fludland.api.clients.SSOClient;
+import org.fludland.sso.dtos.UserDetailsDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+public class JwtAuthFilter extends OncePerRequestFilter {
+    private final SSOClient ssoClient;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthFilter.class);
+
+    @Autowired
+    public JwtAuthFilter(SSOClient ssoClient) {
+        this.ssoClient = ssoClient;
+    }
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
+    ) throws ServletException, IOException {
+        LOGGER.info("JWT Auth Filter");
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        String authorization = request.getHeader("Authorization");
+
+        if (authorization != null && authorization.startsWith("Bearer ")) {
+            String token = authorization.substring(7);
+            UserDetailsDto user = ssoClient.getUser(token);
+            if (user != null) {
+                LOGGER.info("Successfully authenticated user: {}", user.getUsername());
+
+                httpRequest.setAttribute("userId", user.getUserId());
+            }
+        }
+
+        filterChain.doFilter(request, httpResponse);
+    }
+}
