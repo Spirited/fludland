@@ -1,10 +1,17 @@
 import React, {useState} from "react";
+import DatePicker from "react-datepicker";
 import "../css/LoginPage.css"
+import "react-datepicker/dist/react-datepicker.css"
+
+const Gender = {
+    MALE: "Male",
+    FEMALE: "Female"
+};
 
 const RegistrationForm = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [birthday, setBirthday] = useState();
+    const [birthday, setBirthday] = useState(new Date());
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -16,17 +23,13 @@ const RegistrationForm = () => {
         event.preventDefault();
         console.log(firstName);
         console.log(lastName);
-        // console.log(birthday);
+        console.log(birthday);
         console.log(email);
         console.log(username);
         console.log(password);
         console.log(confirmPassword);
         console.log(phone);
         console.log(gender);
-    };
-
-    const handleDateChange = (e) => {
-        setBirthday(e.target.value);
     };
 
     return (
@@ -55,12 +58,11 @@ const RegistrationForm = () => {
                 </div>
                 <div className="inputGroup">
                     <label>Birthday:</label>
-                    <input
-                        type="date"
+                    <DatePicker
                         id="birthday"
-                        className="input"
-                        value={birthday}
-                        onChange={(e) => handleDateChange(e)}
+                        dateFormat={"dd.MM.yyyy"}
+                        selected={birthday}
+                        onChange={(birthday) => setBirthday(birthday)}
                     />
                 </div>
                 <div className="inputGroup">
@@ -114,8 +116,12 @@ const RegistrationForm = () => {
                 <div className="inputGroup">
                     <label>Gender:</label>
                     <select className="input" id="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option value="" disabled>Select gender</option>
+                        {Object.values(Gender).map((value) => (
+                            <option key={value} value={value}>
+                                {value}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <button type="submit" className="button">Register</button>
