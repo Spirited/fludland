@@ -1,7 +1,10 @@
 package org.fludland.sso.repository;
 
 import org.fludland.sso.entities.User;
+import org.fludland.sso.enums.UserAccountStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -50,8 +53,10 @@ class UserRepositoryTest extends AbstractDataIntegrationTest {
         userRepository.save(user);
         User savedUser = userRepository.findById(3L).orElse(null);
         assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getId()).isEqualTo(3L);
         assertThat(savedUser.getUsername()).isEqualTo("test");
         assertThat(savedUser.getPassword()).isEqualTo("password");
+        assertThat(savedUser.getCreatedAt()).isNotNull();
 
     }
 
@@ -74,5 +79,22 @@ class UserRepositoryTest extends AbstractDataIntegrationTest {
 
         assertThat(byUsername).isNotNull();
         assertThat(byUsername.isPresent()).isTrue();
+    }
+
+    @ParameterizedTest
+    @EnumSource(UserAccountStatus.class)
+    void test_create_user_with_status_expected_not_null_result(UserAccountStatus accountStatus) {
+        User user = new User();
+        user.setUsername("test");
+        user.setPassword("password");
+        user.setAccountStatus(accountStatus);
+        userRepository.save(user);
+        User savedUser = userRepository.findById(3L).orElse(null);
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getId()).isEqualTo(3L);
+        assertThat(savedUser.getUsername()).isEqualTo("test");
+        assertThat(savedUser.getPassword()).isEqualTo("password");
+        assertThat(savedUser.getCreatedAt()).isNotNull();
+        assertThat(savedUser.getAccountStatus()).isEqualTo(accountStatus);
     }
 }

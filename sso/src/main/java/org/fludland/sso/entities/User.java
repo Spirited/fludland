@@ -3,6 +3,9 @@ package org.fludland.sso.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.fludland.sso.enums.UserAccountStatus;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users", schema = "sso")
@@ -24,6 +27,9 @@ public class User {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserAccountStatus accountStatus;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     public Long getId() {
         return id;
@@ -57,6 +63,14 @@ public class User {
         this.accountStatus = accountStatus;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -64,6 +78,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", accountStatus=" + accountStatus +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
