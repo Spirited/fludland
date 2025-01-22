@@ -13,12 +13,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final SSOClient ssoClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthFilter.class);
+    private static final Set<String> allowedURLs = Set.of("/login", "/sign-up");
 
     @Autowired
     public JwtAuthFilter(SSOClient ssoClient) {
@@ -34,15 +36,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String authorization = request.getHeader("Authorization");
+        String requestURl = request.getRequestURL().toString();
 
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            String token = authorization.substring(7);
-            UserDetailsDto user = ssoClient.getUser(token);
-            if (user != null) {
-                LOGGER.info("Successfully authenticated user: {}", user.getUsername());
+        LOGGER.info("Request URI: {}", requestURl);
 
-                httpRequest.setAttribute("userId", user.getUserId());
+        boolean isAllowed = allowedURLs.stream().anyMatch(requestURl::contains);
+
+        if (!isAllowed) {
+
+            String authorization = request.getHeader("Authorization");
+
+            if (authorization != null && authorization.startsWith("Bearer ")) {
+                String token = authorization.substring(7);
+                UserDetailsDto user = ssoClient.getUser(token);
+                if (user != null) {
+                    LOGGER.info("Successfully authenticated user: {}", user.getUsername());
+
+                    httpRequest.setAttribute("userId", user.getUserId());
+                }
             }
         }
 
