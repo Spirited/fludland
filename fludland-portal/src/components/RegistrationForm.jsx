@@ -3,6 +3,9 @@ import DatePicker from "react-datepicker";
 import "../css/LoginPage.css"
 import "react-datepicker/dist/react-datepicker.css"
 
+import UserRegistrationRequest from "./dto/UserRegistrationRequest.jsx";
+import {useNavigate} from "react-router-dom";
+
 const Gender = {
     MALE: "Male",
     FEMALE: "Female"
@@ -18,6 +21,8 @@ const RegistrationForm = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
+    
+    const navigate = useNavigate();
 
     const handleRegistration = async (event) => {
         event.preventDefault();
@@ -30,6 +35,36 @@ const RegistrationForm = () => {
         console.log(confirmPassword);
         console.log(phone);
         console.log(gender);
+
+        const newUser = new UserRegistrationRequest(firstName, lastName, birthday, email, username, password, confirmPassword, phone, null);
+
+        const body = JSON.stringify(newUser);
+
+        console.log(body);
+        
+        try {
+            const response = await fetch("http://localhost:8080/sign-up", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body
+            });
+
+            console.log(response);
+
+            if (response.status === 200) {
+                const data = await response.json();
+                console.log("Token: ", data);
+                navigate("/main");
+            } else {
+                const errorData = await response.json();
+                // setError(errorData || "Login failed. Please try again.");
+                console.log(errorData)
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -66,7 +101,7 @@ const RegistrationForm = () => {
                     />
                 </div>
                 <div className="inputGroup">
-                    <label type="email">Email:</label>
+                    <label>Email:</label>
                     <input
                         className="input"
                         type="email"
