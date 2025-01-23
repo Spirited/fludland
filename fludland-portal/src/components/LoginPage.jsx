@@ -16,7 +16,7 @@ const LoginPage = () => {
         console.log("Body", JSON.stringify({username, password}));
 
         try {
-            const response = await fetch("http://localhost:8084/login", {
+            const response = await fetch("http://localhost:8080/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -39,8 +39,6 @@ const LoginPage = () => {
             setError("Something went wrong.Please try again later. " + err)
             console.log(error);
         }
-
-        console.log("asdasdasd")
     }
 
     return (
