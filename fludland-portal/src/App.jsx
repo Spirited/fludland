@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginPage from "./components/LoginPage.jsx";
-import MainPage from "./components/MainPage.jsx";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RouteConfigs from "./components/RouteConfigs.jsx";
+import Header from "./templates/Header.jsx";
+import Footer from "./templates/Footer.jsx";
 
-function App() {
-  return (
-      <Router>
-          <Routes>
-              <Route path="/" element={<LoginPage />}/>
-              <Route path="/main" element={<MainPage />}/>
-          </Routes>
-      </Router>
-  );
-}
+const App = () => (
+    <Router>
+        <Header/>
+        <RouteConfigs />
+        <Footer/>
+    </Router>
+)
 
-export default App
+export default App;
