@@ -1,6 +1,7 @@
 package org.fludland.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fludland.userservcie.enums.Gender;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 public class CreateNewAccount {
     private final String firstName;
     private final String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.mm.yyyy")
     private final LocalDate dateOfBirth;
     private final String email;
     private final String username;
