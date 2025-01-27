@@ -33,11 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         LOGGER.info("JWT Auth Filter");
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
         String requestURl = request.getRequestURL().toString();
-
         LOGGER.info("Request URI: {}", requestURl);
 
         boolean isAllowed = allowedURLs.stream().anyMatch(requestURl::contains);
@@ -52,11 +48,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 if (user != null) {
                     LOGGER.info("Successfully authenticated user: {}", user.getUsername());
 
-                    httpRequest.setAttribute("userId", user.getUserId());
+                    request.setAttribute("userId", user.getUserId());
                 }
             }
         }
 
-        filterChain.doFilter(request, httpResponse);
+        filterChain.doFilter(request, response);
     }
 }
