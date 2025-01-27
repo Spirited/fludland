@@ -1,6 +1,6 @@
 package org.fludland.api.clients;
 
-import org.fludland.sso.dtos.AuthorizationDto;
+import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.UserDetailsDto;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SSOClient {
 
     @PostMapping(value = "/login")
-    SuccessfulResult login(AuthorizationDto loginCreateDto);
+    SuccessfulResult login(LoginRequestDto loginCreateDto);
 
     @PostMapping(value = "/register")
     SuccessfulResult register(LoginCreateDto loginCreateDto);

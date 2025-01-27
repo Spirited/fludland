@@ -4,7 +4,7 @@ import org.fludland.api.clients.SSOClient;
 import org.fludland.api.clients.UserServiceClient;
 import org.fludland.api.dto.CreateNewAccount;
 import org.fludland.api.service.AuthService;
-import org.fludland.sso.dtos.AuthorizationDto;
+import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.userservcie.CreateProfileDto;
@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public SuccessfulResult login(AuthorizationDto loginCreateDto) {
+    public SuccessfulResult login(LoginRequestDto loginCreateDto) {
         return ssoClient.login(loginCreateDto);
     }
 

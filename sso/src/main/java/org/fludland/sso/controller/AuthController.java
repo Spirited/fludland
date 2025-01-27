@@ -1,6 +1,6 @@
 package org.fludland.sso.controller;
 
-import org.fludland.sso.dtos.AuthorizationDto;
+import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.service.AuthorizationService;
@@ -18,7 +18,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SuccessfulResult> login(@RequestBody AuthorizationDto dto) {
+    public ResponseEntity<SuccessfulResult> login(@RequestBody LoginRequestDto dto) {
         return ResponseEntity.ok(authorizationService.login(dto));
     }
 
