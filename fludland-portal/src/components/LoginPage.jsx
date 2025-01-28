@@ -24,11 +24,11 @@ const LoginPage = () => {
                 body: JSON.stringify({username, password})
             });
 
-            console.log(response);
+            console.log("Response //login:", response);
 
             if (response.status === 200) {
-                const data = await response.json();
-                console.log("Token: ", data);
+                const cookie = response.headers.getSetCookie();
+                console.log("Cookies: ", cookie)
                 navigate("/main");
             } else {
                 const errorData = await response.json();
@@ -48,7 +48,6 @@ const LoginPage = () => {
                 <div className="inputGroup">
                     <label htmlFor="email">Email:</label>
                     <input
-                        type="email"
                         id="email"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}

@@ -1,10 +1,10 @@
 package org.fludland.sso.dtos;
 
-public class AuthorizationDto {
+public class LoginRequestDto {
     private final String username;
     private final String password;
 
-    public AuthorizationDto(String username, String password) {
+    public LoginRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
     }
