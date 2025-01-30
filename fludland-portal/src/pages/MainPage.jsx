@@ -1,7 +1,11 @@
-const MainPage = () => {
+import React from "react";
+
+const MainPage = ({ user }) => {
+
+
     return (
         <div className="container">
-            <h2>Welcome to the main page</h2>
+            <h2>Welcome, {{user}} to the main page</h2>
             <p>This is main user page!!!!!</p>
         </div>
     );
