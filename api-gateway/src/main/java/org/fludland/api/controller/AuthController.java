@@ -1,5 +1,6 @@
 package org.fludland.api.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.fludland.api.dto.CreateNewAccount;
 import org.fludland.api.service.AuthService;
 import org.fludland.sso.dtos.LoginRequestDto;
@@ -22,8 +23,13 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginCreateDto) {
-        ResponseCookie cookie = ResponseCookie.from(authService.login(loginCreateDto).getToken()).build();
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginCreateDto, HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie
+                .from("token", authService.login(loginCreateDto).getToken())
+                .path("/")
+                .secure(true)
+                .httpOnly(true)
+                .build();
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
