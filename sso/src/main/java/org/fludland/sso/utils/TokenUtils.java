@@ -16,14 +16,16 @@ import java.util.Date;
 @Component
 public final class TokenUtils {
 
+    private static final String ISSUER_NAME = "Fludland";
     private static final String SECRET = "mySecretKey";  // Secret key for signing JWT
     private static final long EXPIRATION_TIME = 86400000;
 
     public String generateJWT(Long userId, String username) {
-
         return JWT.create()
-                .withSubject(username)  // Username or user ID
+                .withIssuer(ISSUER_NAME)
+                .withSubject("Access-Token")
                 .withClaim("userid", userId)
+                .withClaim("username", username)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))  // Expiration time
                 .sign(Algorithm.HMAC256(SECRET));
