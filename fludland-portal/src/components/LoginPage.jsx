@@ -18,17 +18,19 @@ const LoginPage = () => {
         try {
             const response = await fetch("http://localhost:8080/login", {
                 method: "POST",
-                headers: {
+                withCredentials: true,
+                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({username, password})
+                body: JSON.stringify({username, password}),
+                credentials: "include"
             });
 
             console.log("Response //login:", response);
+            console.log("Response status:", response.status);
+
 
             if (response.status === 200) {
-                const cookie = response.headers.getSetCookie();
-                console.log("Cookies: ", cookie)
                 navigate("/main");
             } else {
                 const errorData = await response.json();
