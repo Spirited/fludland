@@ -12,7 +12,7 @@
 
     <changeSet id="create_token_table" author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
-        <sqlFile path="db/sql/create_token_table.sql" />
+        <sqlFile path="db/sql/token.sql" />
     </changeSet>
 
     <changeSet id="create_group_table" author="@skompanets" context="migrate01">

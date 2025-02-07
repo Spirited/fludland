@@ -5,6 +5,7 @@ CREATE TABLE users (
   status        VARCHAR(255),
   created_at    TIMESTAMP,
   last_login    TIMESTAMP,
+  ip_address    VARCHAR(20),
 
   CONSTRAINT pk_user PRIMARY KEY (id)
 );
