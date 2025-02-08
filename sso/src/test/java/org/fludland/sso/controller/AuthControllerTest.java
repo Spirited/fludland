@@ -4,13 +4,8 @@ import org.fludland.common.ErrorResponse;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.SuccessfulResult;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Objects;
 
@@ -21,16 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AuthControllerTest extends AbstractWebIntegrationTest {
-
-    @Autowired
-    private WebApplicationContext wac;
-
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-    }
 
     @Test
     void test_register_new_user_expect_not_null_token_response() throws Exception {
