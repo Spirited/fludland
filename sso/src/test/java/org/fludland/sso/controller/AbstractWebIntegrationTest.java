@@ -17,7 +17,7 @@ import java.io.IOException;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
-@SqlGroup(@Sql({"classpath:/cleanup.sql"}))
+@SqlGroup(@Sql({"classpath:/cleanup.sql", "classpath:/data.sql"}))
 public abstract class AbstractWebIntegrationTest extends AbstractIntegrationTest {
     final ObjectMapper mapper = new ObjectMapper();
 

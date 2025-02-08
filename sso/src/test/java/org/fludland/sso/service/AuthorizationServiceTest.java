@@ -1,9 +1,11 @@
 package org.fludland.sso.service;
 
 import org.fludland.sso.dtos.LoginCreateDto;
+import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
+import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.impl.AuthorizationServiceImpl;
 import org.fludland.sso.utils.TokenUtils;
@@ -66,5 +68,33 @@ class AuthorizationServiceTest {
                 () -> authorizationService.register(loginCreateDto)
         );
         assertThat(assertedThrows.getMessage()).contains("foo");
+    }
+
+    @Test
+    void test_login_user_expected_successful_result() {
+        LoginRequestDto loginCreateDto = new LoginRequestDto("foo", "bar");
+        User user = new User();
+        user.setId(100L);
+        user.setUsername("foo");
+        user.setPassword("bar");
+
+        when(mockUserRepository.findByUsername("foo")).thenReturn(Optional.of(user));
+        when(mockTokenUtils.generateJWT(anyLong(), anyString())).thenReturn("12345");
+
+        SuccessfulResult result = authorizationService.login(loginCreateDto);
+        assertThat(result.getToken()).isNotNull();
+    }
+
+    @Test
+    void test_login_with_wrong_password_expected_exception() {
+        LoginRequestDto loginCreateDto = new LoginRequestDto("foo", "bar");
+        User user = new User();
+        user.setId(100L);
+        user.setUsername("foo");
+        user.setPassword("mypassword");
+
+        when(mockUserRepository.findByUsername("foo")).thenReturn(Optional.of(user));
+
+        assertThrows(WrongLoginOrPasswordException.class, () -> authorizationService.login(loginCreateDto));
     }
 }
