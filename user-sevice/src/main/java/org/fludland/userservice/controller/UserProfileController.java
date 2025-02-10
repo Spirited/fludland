@@ -2,6 +2,7 @@ package org.fludland.userservice.controller;
 
 import org.fludland.userservcie.CreateProfileDto;
 import org.fludland.userservcie.OriginalProfileDto;
+import org.fludland.userservcie.UpdateProfileDto;
 import org.fludland.userservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,13 @@ public class UserProfileController {
     @GetMapping(path = "/{userId}")
     public ResponseEntity<OriginalProfileDto> getUserProfile(@PathVariable final Long userId) {
         return ResponseEntity.ok(userProfileService.getProfileByUserId(userId));
+    }
+
+    @PutMapping
+    public ResponseEntity<OriginalProfileDto> updateUserProfile(
+            @RequestParam("userId") final Long userId,
+            @RequestBody            final UpdateProfileDto originalProfileDto
+    ) {
+        return ResponseEntity.ok(userProfileService.editProfile(userId, originalProfileDto));
     }
 }

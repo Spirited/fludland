@@ -1,8 +1,11 @@
 package org.fludland.userservice.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.fludland.userservcie.CreateProfileDto;
 import org.fludland.userservcie.OriginalProfileDto;
+import org.fludland.userservcie.UpdateProfileDto;
 import org.fludland.userservice.entities.UserProfile;
+import org.fludland.userservice.exceptions.ProfileByUserIdAlreadyException;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
 import org.fludland.userservice.repository.UserProfileRepository;
 import org.fludland.userservice.service.UserProfileService;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.Optional;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
@@ -22,6 +26,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public CreateProfileDto createProfile(CreateProfileDto userProfile) {
+        Optional<UserProfile> byUserId = userProfileRepository.findByUserId(userProfile.getUserId());
+
+        if (byUserId.isPresent()) {
+            throw new ProfileByUserIdAlreadyException();
+        }
+
         UserProfile userProfileEntity = new UserProfile();
 
         userProfileEntity.setUserId(userProfile.getUserId());
@@ -43,8 +53,33 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public void editProfile(Integer profileId, CreateProfileDto userProfile) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public OriginalProfileDto editProfile(Long userId, UpdateProfileDto userProfile) {
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(ProfileNotFoundException::new);
+
+        if (StringUtils.isNotBlank(userProfile.getFirstName())) {
+            profile.setFirstName(userProfile.getFirstName());
+        }
+        if (StringUtils.isNotBlank(userProfile.getLastName())) {
+            profile.setLastName(userProfile.getLastName());
+        }
+        if (userProfile.getDateOfBirth() != null) {
+            profile.setDateOfBirth(Date.valueOf(userProfile.getDateOfBirth()));
+        }
+        if (userProfile.getGender() != null) {
+            profile.setGender(userProfile.getGender());
+        }
+        if (StringUtils.isNotBlank(userProfile.getEmail())) {
+            profile.setEmail(userProfile.getEmail());
+        }
+        if (StringUtils.isNotBlank(userProfile.getPhoneNumber())) {
+            profile.setPhone(userProfile.getPhoneNumber());
+        }
+        if (userProfile.getLogoId() != null) {
+            profile.setLogoImageId(userProfile.getLogoId());
+        }
+
+        UserProfile saved = userProfileRepository.save(profile);
+        return convertUserProfileToProfileDto(saved);
     }
 
     @Override

@@ -67,5 +67,5 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
         assertThat(singleObject.getPhoneNumber()).isEqualTo("380971228367");
         assertThat(singleObject.getEmail()).isEqualTo("john@smith.com");
     }
-    
+
 }

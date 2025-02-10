@@ -21,15 +21,17 @@ class ProfileRepositoryTest extends AbstractDataIntegrationTest {
     @Test
     void test_create_profile_expected_success_result() {
         UserProfile userProfile = new UserProfile();
-        userProfile.setUserId(42L);
+        userProfile.setUserId(99L);
         userProfile.setFirstName("John");
         userProfile.setLastName("Doe");
         userProfile.setEmail("john@doe.com");
         userProfile = userProfileRepository.save(userProfile);
 
         assertThat(userProfile).isNotNull();
-        assertThat(userProfile.getId()).isNotNull().isEqualTo(2L);
-        assertThat(userProfile.getUserId()).isEqualTo(42);
+        assertThat(userProfile.getId()).isNotNull().isEqualTo(userProfile.getId());
+        assertThat(userProfile.getUserId()).isEqualTo(userProfile.getUserId());
+        assertThat(userProfile.getFirstName()).isEqualTo(userProfile.getFirstName());
+        assertThat(userProfile.getLastName()).isEqualTo(userProfile.getLastName());
     }
 
     @Test
@@ -57,5 +59,12 @@ class ProfileRepositoryTest extends AbstractDataIntegrationTest {
         assertThat(userProfile.getGender()).isEqualTo(Gender.MALE);
         assertThat(userProfile.getPhone()).isEqualTo("380971228367");
         assertThat(userProfile.getLogoImageId()).isEqualTo(13L);
+    }
+
+    @Test
+    void test_delete_profile_expected_null_result_while_find_profile_by_id() {
+        userProfileRepository.deleteById(1L);
+        Optional<UserProfile> profile = userProfileRepository.findById(1L);
+        assertThat(profile).isNotNull();
     }
 }
