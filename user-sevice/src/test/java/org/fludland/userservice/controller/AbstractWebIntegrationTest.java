@@ -1,6 +1,7 @@
 package org.fludland.userservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.fludland.userservice.AbstractIntegrationTest;
@@ -46,6 +47,14 @@ public abstract class AbstractWebIntegrationTest extends AbstractIntegrationTest
 
         try {
             return mapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T> T asSingleObject(final String json, final TypeReference<T> typeReference) {
+        try {
+            return mapper.readValue(json, typeReference);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

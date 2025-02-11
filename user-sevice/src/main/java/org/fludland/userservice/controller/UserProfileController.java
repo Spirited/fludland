@@ -1,5 +1,6 @@
 package org.fludland.userservice.controller;
 
+import org.fludland.common.SuccessResponse;
 import org.fludland.userservcie.CreateProfileDto;
 import org.fludland.userservcie.OriginalProfileDto;
 import org.fludland.userservcie.UpdateProfileDto;
@@ -19,20 +20,23 @@ public class UserProfileController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateProfileDto> createUserProfile(@RequestBody final CreateProfileDto createProfileDto) {
-        return ResponseEntity.ok(userProfileService.createProfile(createProfileDto));
+    public ResponseEntity<SuccessResponse<CreateProfileDto>> createUserProfile(@RequestBody final CreateProfileDto createProfileDto) {
+        return ResponseEntity.ok(new SuccessResponse<>(userProfileService.createProfile(createProfileDto)));
     }
 
-    @GetMapping(path = "/{userId}")
-    public ResponseEntity<OriginalProfileDto> getUserProfile(@PathVariable final Long userId) {
-        return ResponseEntity.ok(userProfileService.getProfileByUserId(userId));
+    @GetMapping
+    public ResponseEntity<SuccessResponse<OriginalProfileDto>> getUserProfileByUserId(
+            @RequestParam("userId") final Long userId
+    ) {
+        return ResponseEntity.ok(new
+                SuccessResponse<>(userProfileService.getProfileByUserId(userId)));
     }
 
     @PutMapping
-    public ResponseEntity<OriginalProfileDto> updateUserProfile(
+    public ResponseEntity<SuccessResponse<OriginalProfileDto>> updateUserProfileUserId(
             @RequestParam("userId") final Long userId,
             @RequestBody            final UpdateProfileDto originalProfileDto
     ) {
-        return ResponseEntity.ok(userProfileService.editProfile(userId, originalProfileDto));
+        return ResponseEntity.ok(new SuccessResponse<>(userProfileService.editProfile(userId, originalProfileDto)));
     }
 }

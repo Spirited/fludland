@@ -1,5 +1,7 @@
 package org.fludland.userservice.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.fludland.common.SuccessResponse;
 import org.fludland.userservcie.CreateProfileDto;
 import org.fludland.userservcie.enums.Gender;
 import org.junit.jupiter.api.Test;
@@ -37,7 +39,15 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        CreateProfileDto profileDto = asSingleObject(content, CreateProfileDto.class);
+        SuccessResponse<CreateProfileDto> successResponse = asSingleObject(
+                content,
+                new TypeReference<SuccessResponse<CreateProfileDto>>() {}
+        );
+
+        assertThat(successResponse).isNotNull();
+
+        CreateProfileDto profileDto = successResponse.getData();
+
         assertThat(profileDto).isNotNull();
         assertThat(profileDto.getUserId()).isEqualTo(100L);
         assertThat(profileDto.getFirstName()).isEqualTo("John");
@@ -50,22 +60,29 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
 
     @Test
     void test_try_to_get_userprofile_by_user_id_expected_success_result() throws Exception {
-        String content = mockMvc.perform(get("/profiles/{userId}", 42L).contentType("application/json"))
+        String content = mockMvc.perform(get("/profiles").param("userId", "42").contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
-        CreateProfileDto singleObject = asSingleObject(content, CreateProfileDto.class);
-        assertThat(singleObject).isNotNull();
-        assertThat(singleObject.getUserId()).isEqualTo(42L);
-        assertThat(singleObject.getFirstName()).isEqualTo("john");
-        assertThat(singleObject.getLastName()).isEqualTo("smith");
-        assertThat(singleObject.getDateOfBirth()).isEqualTo(LocalDate.of(1987, 12, 11));
-        assertThat(singleObject.getGender()).isEqualTo(Gender.MALE);
-        assertThat(singleObject.getPhoneNumber()).isEqualTo("380971228367");
-        assertThat(singleObject.getEmail()).isEqualTo("john@smith.com");
+        SuccessResponse<CreateProfileDto> successResponse = asSingleObject(
+                content,
+                new TypeReference<SuccessResponse<CreateProfileDto>>() {}
+        );
+
+        assertThat(successResponse).isNotNull();
+
+        CreateProfileDto profileDto = successResponse.getData();
+        assertThat(profileDto).isNotNull();
+        assertThat(profileDto.getUserId()).isEqualTo(42L);
+        assertThat(profileDto.getFirstName()).isEqualTo("john");
+        assertThat(profileDto.getLastName()).isEqualTo("smith");
+        assertThat(profileDto.getDateOfBirth()).isEqualTo(LocalDate.of(1987, 12, 11));
+        assertThat(profileDto.getGender()).isEqualTo(Gender.MALE);
+        assertThat(profileDto.getPhoneNumber()).isEqualTo("380971228367");
+        assertThat(profileDto.getEmail()).isEqualTo("john@smith.com");
     }
 
 }
