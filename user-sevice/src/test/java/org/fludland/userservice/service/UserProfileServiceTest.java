@@ -92,16 +92,7 @@ class UserProfileServiceTest {
     void test_update_user_profile_email_only_expected_success_result() {
         LocalDate birthday = LocalDate.of(2000, 1, 1);
 
-        UserProfile fetchedProfile = new UserProfile();
-        fetchedProfile.setId(1L);
-        fetchedProfile.setUserId(42L);
-        fetchedProfile.setFirstName("test");
-        fetchedProfile.setLastName("lastname");
-        fetchedProfile.setGender(Gender.MALE);
-        fetchedProfile.setDateOfBirth(Date.valueOf(birthday));
-        fetchedProfile.setPhone("123456789");
-        fetchedProfile.setEmail("test@test.com");
-        fetchedProfile.setLogoImageId(101L);
+        UserProfile fetchedProfile = generateFetchedUserProfile();
 
         UpdateProfileDto updateProfileDto = new UpdateProfileDto(
                 null,
@@ -139,18 +130,7 @@ class UserProfileServiceTest {
 
     @Test
     void test_update_user_profile_expected_success_result() {
-        LocalDate birthday = LocalDate.of(2000, 1, 1);
-
-        UserProfile fetchedProfile = new UserProfile();
-        fetchedProfile.setId(1L);
-        fetchedProfile.setUserId(42L);
-        fetchedProfile.setFirstName("test");
-        fetchedProfile.setLastName("lastname");
-        fetchedProfile.setGender(Gender.MALE);
-        fetchedProfile.setDateOfBirth(Date.valueOf(birthday));
-        fetchedProfile.setPhone("123456789");
-        fetchedProfile.setEmail("test@test.com");
-        fetchedProfile.setLogoImageId(101L);
+        UserProfile fetchedProfile = generateFetchedUserProfile();
 
         UpdateProfileDto updateProfileDto = new UpdateProfileDto(
                 "santa",
@@ -161,16 +141,7 @@ class UserProfileServiceTest {
                 "updated.email@gmail.com",
                 999L);
 
-        UserProfile updatedProfile = new UserProfile();
-        updatedProfile.setId(1L);
-        updatedProfile.setUserId(42L);
-        updatedProfile.setFirstName("santa");
-        updatedProfile.setLastName("clauth");
-        updatedProfile.setGender(Gender.MALE);
-        updatedProfile.setDateOfBirth(Date.valueOf(LocalDate.of(1899, 11, 11)));
-        updatedProfile.setPhone("0987654321");
-        updatedProfile.setEmail("updated.email@gmail.com");
-        updatedProfile.setLogoImageId(999L);
+        UserProfile updatedProfile = generateUpdateUserProfile();
 
         when(mockUserProfileRepository.findByUserId(anyLong())).thenReturn(Optional.of(fetchedProfile));
         when(mockUserProfileRepository.save(any())).thenReturn(updatedProfile);
@@ -184,5 +155,57 @@ class UserProfileServiceTest {
         assertThat(originalProfileDto.getDateOfBirth()).isEqualTo(updatedProfile.getDateOfBirth().toLocalDate());
         assertThat(originalProfileDto.getPhoneNumber()).isEqualTo(updatedProfile.getPhone());
         assertThat(originalProfileDto.getEmail()).isEqualTo(updatedProfile.getEmail());
+    }
+
+    @Test
+    void test_try_to_delete_user_profile_by_user_id_which_does_not_exist_expected_throws_exception() {
+        when(mockUserProfileRepository.findByUserId(anyLong())).thenReturn(Optional.empty());
+        assertThrows(ProfileNotFoundException.class, () -> userProfileService.deleteProfile(42L));
+    }
+
+    @Test
+    void test_delete_user_profile_expected_success_result() {
+        when(mockUserProfileRepository.findByUserId(anyLong())).thenReturn(Optional.of(generateFetchedUserProfile()));
+        when(mockUserProfileRepository.findById(anyLong())).thenReturn(Optional.empty());
+        boolean result = userProfileService.deleteProfile(42L);
+        assertThat(result).isTrue();
+    }
+
+    private static UserProfile generateFetchedUserProfile() {
+        return generateUserProfile(
+                1L, 42L, "test", "lastname", Gender.MALE,
+                LocalDate.of(2000, 1, 1), "123456789", "test@test.com", 101L
+        );
+    }
+
+    private static UserProfile generateUpdateUserProfile() {
+
+        return generateUserProfile(1L, 42L, "santa", "clauth",Gender.MALE,
+                LocalDate.of(1899, 11, 11), "0987654321", "updated.email@gmail.com", 999L);
+    }
+
+    private static UserProfile generateUserProfile(
+            final long id,
+            final long userId,
+            String firstName,
+            String lastName,
+            Gender gender,
+            LocalDate birthday,
+            String phone,
+            String email,
+            long logoImageId
+    ) {
+        UserProfile userProfile = new UserProfile();
+        userProfile.setId(id);
+        userProfile.setUserId(userId);
+        userProfile.setFirstName(firstName);
+        userProfile.setLastName(lastName);
+        userProfile.setGender(gender);
+        userProfile.setDateOfBirth(Date.valueOf(birthday));
+        userProfile.setPhone(phone);
+        userProfile.setEmail(email);
+        userProfile.setLogoImageId(logoImageId);
+
+        return userProfile;
     }
 }

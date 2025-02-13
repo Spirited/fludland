@@ -83,8 +83,11 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public void deleteProfile(Integer profileId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean deleteProfile(Long userId) {
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(ProfileNotFoundException::new);
+        userProfileRepository.delete(profile);
+
+        return !userProfileRepository.findById(profile.getId()).isPresent();
     }
 
     @Override

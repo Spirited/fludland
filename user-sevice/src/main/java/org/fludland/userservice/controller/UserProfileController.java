@@ -39,4 +39,11 @@ public class UserProfileController {
     ) {
         return ResponseEntity.ok(new SuccessResponse<>(userProfileService.editProfile(userId, originalProfileDto)));
     }
+
+    @DeleteMapping
+    public ResponseEntity<SuccessResponse<String>> deleteUserProfileUserId(@RequestParam("userId") final Long userId) {
+        return ResponseEntity.ok(
+                new SuccessResponse<>(userProfileService.deleteProfile(userId) ? "Deleted" : "Not Deleted")
+        );
+    }
 }

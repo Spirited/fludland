@@ -7,6 +7,6 @@ import org.fludland.userservcie.profile.UpdateProfileDto;
 public interface UserProfileService {
     CreateProfileDto createProfile(CreateProfileDto userProfile);
     OriginalProfileDto editProfile(Long userId, UpdateProfileDto userProfile);
-    void deleteProfile(Integer profileId);
+    boolean deleteProfile(Long userId);
     OriginalProfileDto getProfileByUserId(Long userId);
 }

@@ -66,5 +66,6 @@ class ProfileRepositoryTest extends AbstractDataIntegrationTest {
         userProfileRepository.deleteById(1L);
         Optional<UserProfile> profile = userProfileRepository.findById(1L);
         assertThat(profile).isNotNull();
+        assertThat(profile.isPresent()).isFalse();
     }
 }
