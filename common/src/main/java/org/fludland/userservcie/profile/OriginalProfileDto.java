@@ -1,4 +1,4 @@
-package org.fludland.userservcie;
+package org.fludland.userservcie.profile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -7,7 +7,7 @@ import org.fludland.userservcie.enums.Gender;
 
 import java.time.LocalDate;
 
-public class CreateProfileDto {
+public class OriginalProfileDto {
     private final Long userId;
     private final String firstName;
     private final String lastName;
@@ -18,7 +18,7 @@ public class CreateProfileDto {
     private final Long logoId;
 
     @JsonCreator
-    public CreateProfileDto(
+    public OriginalProfileDto(
             @JsonProperty("userId")         final Long userId,
             @JsonProperty("firstName")      final String firstName,
             @JsonProperty("lastName")       final String lastName,

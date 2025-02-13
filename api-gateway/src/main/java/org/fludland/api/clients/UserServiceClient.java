@@ -1,7 +1,7 @@
 package org.fludland.api.clients;
 
-import org.fludland.userservcie.CreateProfileDto;
-import org.fludland.userservcie.OriginalProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
+import org.fludland.userservcie.profile.OriginalProfileDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

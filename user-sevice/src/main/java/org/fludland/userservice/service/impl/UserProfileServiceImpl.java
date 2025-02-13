@@ -1,9 +1,9 @@
 package org.fludland.userservice.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.fludland.userservcie.CreateProfileDto;
-import org.fludland.userservcie.OriginalProfileDto;
-import org.fludland.userservcie.UpdateProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
+import org.fludland.userservcie.profile.OriginalProfileDto;
+import org.fludland.userservcie.profile.UpdateProfileDto;
 import org.fludland.userservice.entities.UserProfile;
 import org.fludland.userservice.exceptions.ProfileByUserIdAlreadyException;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;

@@ -3,7 +3,7 @@ create table userprofile (
     firstName varchar(25),
     lastName varchar(25),
     birthday date,
-    gender varchar(5),
+    gender varchar(6),
     email varchar(50),
     phone varchar(15),
     userid BIGINT not null unique,

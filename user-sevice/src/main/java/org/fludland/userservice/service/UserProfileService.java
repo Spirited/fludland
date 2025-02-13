@@ -1,8 +1,8 @@
 package org.fludland.userservice.service;
 
-import org.fludland.userservcie.CreateProfileDto;
-import org.fludland.userservcie.OriginalProfileDto;
-import org.fludland.userservcie.UpdateProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
+import org.fludland.userservcie.profile.OriginalProfileDto;
+import org.fludland.userservcie.profile.UpdateProfileDto;
 
 public interface UserProfileService {
     CreateProfileDto createProfile(CreateProfileDto userProfile);

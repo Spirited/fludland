@@ -1,9 +1,9 @@
 package org.fludland.userservice.controller;
 
 import org.fludland.common.SuccessResponse;
-import org.fludland.userservcie.CreateProfileDto;
-import org.fludland.userservcie.OriginalProfileDto;
-import org.fludland.userservcie.UpdateProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
+import org.fludland.userservcie.profile.OriginalProfileDto;
+import org.fludland.userservcie.profile.UpdateProfileDto;
 import org.fludland.userservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

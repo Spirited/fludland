@@ -2,7 +2,7 @@ package org.fludland.userservice.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.fludland.common.SuccessResponse;
-import org.fludland.userservcie.CreateProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
 import org.fludland.userservcie.enums.Gender;
 import org.junit.jupiter.api.Test;
 

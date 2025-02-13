@@ -5,7 +5,7 @@ import org.fludland.api.clients.UserServiceClient;
 import org.fludland.api.dto.ProfileDto;
 import org.fludland.api.service.ProfileService;
 import org.fludland.sso.dtos.UserDetailsDto;
-import org.fludland.userservcie.OriginalProfileDto;
+import org.fludland.userservcie.profile.OriginalProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

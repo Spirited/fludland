@@ -7,7 +7,7 @@ import org.fludland.api.service.AuthService;
 import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.dtos.SuccessfulResult;
-import org.fludland.userservcie.CreateProfileDto;
+import org.fludland.userservcie.profile.CreateProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
