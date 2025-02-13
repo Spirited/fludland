@@ -10,6 +10,8 @@ public enum ErrorCodes {
 
     WRONG_LOGIN_OR_PASSWORD_ERROR(3, "Wrong login or password"),
 
+    PROFILE_NOT_FOUND(4, "Profile not found"),
+
     INTERNAL_ERROR(999999, "Internal error"),
 
     SUCCESS_ERROR_CODE(200, "Success");

@@ -5,9 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 						http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create_posts_tables" author="@skompanets" context="migrate01" >
+    <changeSet id="create_user_profile_table" author="@skompanets" context="migrate01" >
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/userprofile.sql" />
+    </changeSet>
+
+    <changeSet id="create_friends_table" author="@skompanets" context="migrate01" >
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/friends.sql" />
     </changeSet>
 
 </databaseChangeLog>
