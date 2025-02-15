@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.fludland.userservcie.enums.Gender;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "userprofile")
@@ -37,6 +39,9 @@ public class UserProfile {
 
     @Column(name = "logoid")
     private Long logoImageId;
+
+    @OneToMany(mappedBy = "friend")
+    private List<Friends> friends = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -108,5 +113,13 @@ public class UserProfile {
 
     public void setLogoImageId(Long logoImageId) {
         this.logoImageId = logoImageId;
+    }
+
+    public List<Friends> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friends> friends) {
+        this.friends = friends;
     }
 }

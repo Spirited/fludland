@@ -1,9 +1,11 @@
 package org.fludland.userservice.service;
 
+import org.fludland.userservcie.friends.FriendsDto;
+
 public interface UserFriendsService {
-    void addUserFriend(String userId, String friendId);
+    String addUserFriend(Long userId, Long friendId);
     void removeUserFriend(String userId, String friendId);
-    void getUserFriends(String userId, int page, int pageSize);
+    FriendsDto getUserFriends(Long userId, int page, int pageSize);
     void getUserFriendsTotal(String userId);
     void blockUserFriend(String userId, String friendId);
     void unblockUserFriend(String userId, String friendId);

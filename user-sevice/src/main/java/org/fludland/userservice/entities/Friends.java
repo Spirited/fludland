@@ -12,12 +12,6 @@ public class Friends {
     @SequenceGenerator(name = "friends_id_gen", sequenceName = "friends_id_seq", allocationSize = 1)
     private long id;
 
-    @Column(nullable = false)
-    private long userid;
-
-    @Column(nullable = false)
-    private long friendId;
-
     @Column
     @Enumerated(EnumType.STRING)
     private FriendshipStatus status;
@@ -28,6 +22,15 @@ public class Friends {
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserProfile user;
+
+    @ManyToOne
+    @JoinColumn(name = "friend_id")
+    private UserProfile friend;
+
+
     public long getId() {
         return id;
     }
@@ -36,20 +39,12 @@ public class Friends {
         this.id = id;
     }
 
-    public long getUserid() {
-        return userid;
+    public UserProfile getFriend() {
+        return friend;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
-    }
-
-    public long getFriendId() {
-        return friendId;
-    }
-
-    public void setFriendId(long friendId) {
-        this.friendId = friendId;
+    public void setFriend(UserProfile profile) {
+        this.friend = profile;
     }
 
     public FriendshipStatus getStatus() {
@@ -74,5 +69,13 @@ public class Friends {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public UserProfile getUser() {
+        return user;
+    }
+
+    public void setUser(UserProfile user) {
+        this.user = user;
     }
 }
