@@ -11,6 +11,7 @@ public enum ErrorCodes {
     WRONG_LOGIN_OR_PASSWORD_ERROR(3, "Wrong login or password"),
 
     PROFILE_NOT_FOUND(4, "Profile not found"),
+    MISSED_MANDATORY_PARAMETERS(5, "Mandatory parameters"),
 
     INTERNAL_ERROR(999999, "Internal error"),
 

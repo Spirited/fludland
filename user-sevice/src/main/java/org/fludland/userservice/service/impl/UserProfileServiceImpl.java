@@ -5,6 +5,7 @@ import org.fludland.userservcie.profile.CreateProfileDto;
 import org.fludland.userservcie.profile.OriginalProfileDto;
 import org.fludland.userservcie.profile.UpdateProfileDto;
 import org.fludland.userservice.entities.UserProfile;
+import org.fludland.userservice.exceptions.AssignedUserIdToProfileException;
 import org.fludland.userservice.exceptions.ProfileByUserIdAlreadyException;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
 import org.fludland.userservice.repository.UserProfileRepository;
@@ -54,6 +55,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public OriginalProfileDto editProfile(Long userId, UpdateProfileDto userProfile) {
+        if (userId == null) {
+            throw new AssignedUserIdToProfileException();
+        }
+
         UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(ProfileNotFoundException::new);
 
         if (StringUtils.isNotBlank(userProfile.getFirstName())) {

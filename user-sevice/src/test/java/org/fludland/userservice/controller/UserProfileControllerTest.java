@@ -1,15 +1,19 @@
 package org.fludland.userservice.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.fludland.common.ErrorResponse;
 import org.fludland.common.SuccessResponse;
 import org.fludland.userservcie.profile.CreateProfileDto;
 import org.fludland.userservcie.enums.Gender;
+import org.fludland.userservcie.profile.OriginalProfileDto;
+import org.fludland.userservcie.profile.UpdateProfileDto;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.fludland.common.ErrorCodes.PROFILE_NOT_FOUND;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -89,6 +93,68 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
     }
 
     @Test
+    void test_try_update_user_profile_by_userid_which_doesnt_exist_expected_error_result() throws Exception {
+        String content = mockMvc.perform(
+                put("/profiles")
+                        .param(USERNAME_PARAM_NAME, "9999999")
+                        .content(asJsonString(generateUpdateUserProfileDtoMale()))
+                        .contentType(CONTENT_TYPE)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        ErrorResponse errorResponse = asSingleObject(
+                content,
+                ErrorResponse.class
+        );
+
+        assertThat(errorResponse).isNotNull();
+        assertThat(errorResponse.getErrorCodes()).isNotNull();
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(PROFILE_NOT_FOUND);
+    }
+
+    @Test
+    void test_try_update_user_profile_by_userid_expected_success_result() throws Exception {
+        String content = mockMvc.perform(
+                        put("/profiles")
+                                .param(USERNAME_PARAM_NAME, USER_ID)
+                                .content(asJsonString(generateUpdateUserProfileDtoMale()))
+                                .contentType(CONTENT_TYPE)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        SuccessResponse<OriginalProfileDto> successResponse = asSingleObject(
+                content,
+                new TypeReference<SuccessResponse<OriginalProfileDto>>() {}
+        );
+
+        assertThat(successResponse).isNotNull();
+        assertThat(successResponse.getData()).isNotNull();
+        OriginalProfileDto profileDto = successResponse.getData();
+        assertThat(profileDto).isNotNull();
+        assertThat(profileDto.getUserId()).isEqualTo(Long.parseLong(USER_ID));
+        assertThat(profileDto.getFirstName()).isNotNull().isNotBlank();
+        assertThat(profileDto.getFirstName()).isEqualTo(generateUpdateUserProfileDtoMale().getFirstName());
+        assertThat(profileDto.getLastName()).isNotNull().isNotBlank();
+        assertThat(profileDto.getLastName()).isEqualTo(generateUpdateUserProfileDtoMale().getLastName());
+        assertThat(profileDto.getDateOfBirth()).isNotNull();
+        assertThat(profileDto.getDateOfBirth()).isEqualTo(LocalDate.of(1899, 11, 11));
+        assertThat(profileDto.getGender()).isNotNull();
+        assertThat(profileDto.getGender()).isEqualTo(Gender.MALE);
+        assertThat(profileDto.getPhoneNumber()).isNotNull().isNotBlank();
+        assertThat(profileDto.getPhoneNumber()).isEqualTo(generateUpdateUserProfileDtoMale().getPhoneNumber());
+        assertThat(profileDto.getEmail()).isNotNull().isNotBlank();
+        assertThat(profileDto.getEmail()).isEqualTo(generateUpdateUserProfileDtoMale().getEmail());
+    }
+
+    @Test
     void test_delete_user_profile_expected_success_result() throws Exception {
         String content = mockMvc.perform(
                         delete("/profiles")
@@ -111,4 +177,50 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
         assertThat(successResponse.getData()).isEqualTo("Deleted");
     }
 
+    @Test
+    void test_delete_user_profile_if_user_id_does_not_exist_expected_failed_result() throws Exception {
+        String content = mockMvc.perform(
+                        delete("/profiles")
+                                .param(USERNAME_PARAM_NAME, "99999")
+                                .contentType(CONTENT_TYPE)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        ErrorResponse errorResponse = asSingleObject(
+                content,
+                ErrorResponse.class
+        );
+
+        assertThat(errorResponse).isNotNull();
+        assertThat(errorResponse.getErrorCodes()).isNotNull();
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(PROFILE_NOT_FOUND);
+    }
+
+    private static UpdateProfileDto generateUpdateUserProfileDtoMale() {
+        return generateUpdateProfileDto(
+                "santa",
+                "clauth",
+                LocalDate.of(1899, 11, 11),
+                Gender.MALE,
+                "0987654321",
+                "updated.email@gmail.com",
+                999L);
+    }
+
+    private static UpdateProfileDto generateUpdateProfileDto(
+            String firstName, String lastName, LocalDate birthDay, Gender gender, String phoneNumber, String email, long logoImageId
+    ) {
+        return new UpdateProfileDto(
+                firstName,
+                lastName,
+                birthDay,
+                gender,
+                phoneNumber,
+                email,
+                logoImageId);
+    }
 }

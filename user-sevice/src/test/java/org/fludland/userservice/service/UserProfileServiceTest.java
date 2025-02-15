@@ -5,6 +5,7 @@ import org.fludland.userservcie.profile.OriginalProfileDto;
 import org.fludland.userservcie.profile.UpdateProfileDto;
 import org.fludland.userservcie.enums.Gender;
 import org.fludland.userservice.entities.UserProfile;
+import org.fludland.userservice.exceptions.AssignedUserIdToProfileException;
 import org.fludland.userservice.exceptions.ProfileByUserIdAlreadyException;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
 import org.fludland.userservice.repository.UserProfileRepository;
@@ -132,14 +133,7 @@ class UserProfileServiceTest {
     void test_update_user_profile_expected_success_result() {
         UserProfile fetchedProfile = generateFetchedUserProfile();
 
-        UpdateProfileDto updateProfileDto = new UpdateProfileDto(
-                "santa",
-                "clauth",
-                LocalDate.of(1899, 11, 11),
-                Gender.FEMALE,
-                "0987654321",
-                "updated.email@gmail.com",
-                999L);
+        UpdateProfileDto updateProfileDto = generateUpdateUserProfileDtoFemale();
 
         UserProfile updatedProfile = generateUpdateUserProfile();
 
@@ -155,6 +149,12 @@ class UserProfileServiceTest {
         assertThat(originalProfileDto.getDateOfBirth()).isEqualTo(updatedProfile.getDateOfBirth().toLocalDate());
         assertThat(originalProfileDto.getPhoneNumber()).isEqualTo(updatedProfile.getPhone());
         assertThat(originalProfileDto.getEmail()).isEqualTo(updatedProfile.getEmail());
+    }
+
+    @Test
+    void test_update_user_profile_with_null_value_user_id_expected_throws_exception() {
+        UpdateProfileDto updateProfileDto = generateUpdateUserProfileDtoMale();
+        assertThrows(AssignedUserIdToProfileException.class, () -> userProfileService.editProfile(null, updateProfileDto));
     }
 
     @Test
@@ -207,5 +207,40 @@ class UserProfileServiceTest {
         userProfile.setLogoImageId(logoImageId);
 
         return userProfile;
+    }
+
+    private static UpdateProfileDto generateUpdateUserProfileDtoFemale() {
+        return generateUpdateProfileDto(
+                "santa",
+                "clauth",
+                LocalDate.of(1899, 11, 11),
+                Gender.FEMALE,
+                "0987654321",
+                "updated.email@gmail.com",
+                999L);
+    }
+
+    private static UpdateProfileDto generateUpdateUserProfileDtoMale() {
+        return generateUpdateProfileDto(
+                "santa",
+                "clauth",
+                LocalDate.of(1899, 11, 11),
+                Gender.MALE,
+                "0987654321",
+                "updated.email@gmail.com",
+                999L);
+    }
+
+    private static UpdateProfileDto generateUpdateProfileDto(
+            String firstName, String lastName, LocalDate birthDay, Gender gender, String phoneNumber, String email, long logoImageId
+    ) {
+        return new UpdateProfileDto(
+                firstName,
+                lastName,
+                birthDay,
+                gender,
+                phoneNumber,
+                email,
+                logoImageId);
     }
 }
