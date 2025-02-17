@@ -1,7 +1,7 @@
 package org.fludland.userservice.entities;
 
 import jakarta.persistence.*;
-import org.fludland.userservice.enums.FriendshipStatus;
+import org.fludland.userservcie.enums.FriendshipStatus;
 
 import java.time.LocalDateTime;
 

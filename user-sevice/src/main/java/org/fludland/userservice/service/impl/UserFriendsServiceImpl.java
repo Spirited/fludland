@@ -1,17 +1,16 @@
 package org.fludland.userservice.service.impl;
 
+import org.fludland.userservcie.friends.FriendDto;
 import org.fludland.userservcie.friends.FriendsDto;
 import org.fludland.userservice.entities.Friends;
 import org.fludland.userservice.entities.UserProfile;
-import org.fludland.userservice.enums.FriendshipStatus;
+import org.fludland.userservcie.enums.FriendshipStatus;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
 import org.fludland.userservice.repository.UserFriendsRepository;
 import org.fludland.userservice.repository.UserProfileRepository;
 import org.fludland.userservice.service.UserFriendsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserFriendsServiceImpl implements UserFriendsService {
@@ -28,9 +27,30 @@ public class UserFriendsServiceImpl implements UserFriendsService {
     }
 
     @Override
+    public String sendFriendRequest(Long userId, Long friendRequestId) {
+        UserProfile userProfile = getUserProfile(userId);
+        UserProfile friendProfile = getUserProfile(friendRequestId);
+
+        Friends userFriend = new Friends();
+        userFriend.setUser(userProfile);
+        userFriend.setFriend(friendProfile);
+        userFriend.setStatus(FriendshipStatus.REQUESTED);
+
+        Friends friend = new Friends();
+        friend.setUser(friendProfile);
+        friend.setFriend(userProfile);
+        friend.setStatus(FriendshipStatus.PENDING);
+
+        userFriendsRepository.save(userFriend);
+        userFriendsRepository.save(friend);
+
+        return "Success";
+    }
+
+    @Override
     public String addUserFriend(Long userId, Long friendId) {
-        UserProfile userProfile = userProfileRepository.findByUserId(userId).orElseThrow(() -> new ProfileNotFoundException(userId.toString()));
-        UserProfile friendProfile = userProfileRepository.findByUserId(friendId).orElseThrow(() -> new ProfileNotFoundException(friendId.toString()));
+        UserProfile userProfile = getUserProfile(userId);
+        UserProfile friendProfile = getUserProfile(friendId);
 
         Friends userFriend = new Friends();
         userFriend.setUser(userProfile);
@@ -56,8 +76,12 @@ public class UserFriendsServiceImpl implements UserFriendsService {
     @Override
     public FriendsDto getUserFriends(Long userId, int page, int pageSize) {
         UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(() -> new ProfileNotFoundException(userId.toString()));
-        List<Long> friends = profile.getFriends().stream().map(Friends::getUser).map(UserProfile::getUserId).toList();
-        return new FriendsDto(friends);
+        return new FriendsDto(
+                profile.getFriends()
+                        .stream()
+                        .map(f -> new FriendDto(f.getUser().getUserId(), f.getStatus()))
+                        .toList());
+
     }
 
     @Override
@@ -83,5 +107,11 @@ public class UserFriendsServiceImpl implements UserFriendsService {
     @Override
     public boolean isUserFriend(String userId, String friendId) {
         return false;
+    }
+
+    private UserProfile getUserProfile(Long userId) {
+        return userProfileRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new ProfileNotFoundException(userId.toString()));
     }
 }

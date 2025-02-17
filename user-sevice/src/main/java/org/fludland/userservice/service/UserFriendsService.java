@@ -3,6 +3,7 @@ package org.fludland.userservice.service;
 import org.fludland.userservcie.friends.FriendsDto;
 
 public interface UserFriendsService {
+    String sendFriendRequest(Long userId, Long friendRequestId);
     String addUserFriend(Long userId, Long friendId);
     void removeUserFriend(String userId, String friendId);
     FriendsDto getUserFriends(Long userId, int page, int pageSize);

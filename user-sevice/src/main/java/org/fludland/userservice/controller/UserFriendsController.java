@@ -17,9 +17,12 @@ public class UserFriendsController {
         this.userFriendsService = userFriendsService;
     }
 
-    //@PostMapping
-    public ResponseEntity<SuccessResponse<String>> sendRequestToConnect() {
-        return null;
+    @PostMapping("/request")
+    public ResponseEntity<SuccessResponse<String>> sendRequestToConnect(
+            @RequestParam("userId") final Long userId,
+            @RequestParam("friendId") Long friendId
+    ) {
+        return ResponseEntity.ok(new SuccessResponse<>(userFriendsService.sendFriendRequest(userId, friendId)));
     }
 
     @PostMapping

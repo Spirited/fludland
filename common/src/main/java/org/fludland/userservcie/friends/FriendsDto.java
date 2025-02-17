@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class FriendsDto {
-    private final List<Long> friends;
+    private final List<FriendDto> friends;
 
     @JsonCreator
-    public FriendsDto(@JsonProperty("friends") List<Long> friends) {
+    public FriendsDto(@JsonProperty("friends") List<FriendDto> friends) {
         this.friends = friends;
     }
 
     @JsonGetter
-    public List<Long> getFriends() {
+    public List<FriendDto> getFriends() {
         return friends;
     }
 }
