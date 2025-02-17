@@ -1,0 +1,6 @@
+CREATE TABLE followers (
+    id BIGSERIAL NOT NULL UNIQUE PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    follower_id BIGINT NOT NULL,
+    added_on TIMESTAMP DEFAULT NOW()
+)

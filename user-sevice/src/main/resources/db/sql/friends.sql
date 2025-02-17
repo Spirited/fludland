@@ -1,5 +1,5 @@
 CREATE TABLE friends (
-    id BIGSERIAL NOT NULL UNIQUE,
+    id BIGSERIAL NOT NULL UNIQUE PRIMARY KEY,
     user_id BIGINT NOT NULL,
     friend_id BIGINT NOT NULL,
     status VARCHAR(20),
