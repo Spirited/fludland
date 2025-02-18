@@ -6,24 +6,24 @@ import org.fludland.userservice.entities.Friends;
 import org.fludland.userservice.entities.UserProfile;
 import org.fludland.userservcie.enums.FriendshipStatus;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
-import org.fludland.userservice.repository.UserFriendsRepository;
+import org.fludland.userservice.repository.FriendsRepository;
 import org.fludland.userservice.repository.UserProfileRepository;
-import org.fludland.userservice.service.UserFriendsService;
+import org.fludland.userservice.service.FriendsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserFriendsServiceImpl implements UserFriendsService {
+public class FriendsServiceImpl implements FriendsService {
     private final UserProfileRepository userProfileRepository;
-    private final UserFriendsRepository userFriendsRepository;
+    private final FriendsRepository friendsRepository;
 
     @Autowired
-    public UserFriendsServiceImpl(
+    public FriendsServiceImpl(
             final UserProfileRepository userProfileRepository,
-            final UserFriendsRepository userFriendsRepository
+            final FriendsRepository friendsRepository
     ) {
         this.userProfileRepository = userProfileRepository;
-        this.userFriendsRepository = userFriendsRepository;
+        this.friendsRepository = friendsRepository;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class UserFriendsServiceImpl implements UserFriendsService {
         friend.setFriend(userProfile);
         friend.setStatus(FriendshipStatus.PENDING);
 
-        userFriendsRepository.save(userFriend);
-        userFriendsRepository.save(friend);
+        friendsRepository.save(userFriend);
+        friendsRepository.save(friend);
 
         return "Success";
     }
@@ -62,8 +62,8 @@ public class UserFriendsServiceImpl implements UserFriendsService {
         friend.setFriend(userProfile);
         friend.setStatus(FriendshipStatus.FRIENDS);
 
-        userFriendsRepository.save(userFriend);
-        userFriendsRepository.save(friend);
+        friendsRepository.save(userFriend);
+        friendsRepository.save(friend);
 
         return "Success";
     }
