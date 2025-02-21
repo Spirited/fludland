@@ -6,6 +6,6 @@ create table userprofile (
     gender varchar(6),
     email varchar(50),
     phone varchar(15),
-    userid BIGINT not null unique,
+    user_id BIGINT not null unique,
     logoId BIGINT
 );

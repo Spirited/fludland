@@ -34,7 +34,7 @@ public class UserProfile {
     @Column
     private String phone;
 
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "logoid")

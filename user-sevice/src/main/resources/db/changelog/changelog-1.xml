@@ -20,4 +20,9 @@
         <sqlFile path="db/sql/followers.sql" />
     </changeSet>
 
+    <changeSet id="create_user_id_indexes" author="@skompanets" context="migrate01" >
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/create_user_id_index.sql" />
+    </changeSet>
+
 </databaseChangeLog>

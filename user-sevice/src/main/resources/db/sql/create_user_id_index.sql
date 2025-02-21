@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS user_id_idx on userservice.userprofile(user_id);
