@@ -43,6 +43,9 @@ public class UserProfile {
     @OneToMany(mappedBy = "friend")
     private List<Friends> friends = new ArrayList<>();
 
+    @OneToMany(mappedBy = "follower")
+    private List<Followers> followers = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -121,5 +124,13 @@ public class UserProfile {
 
     public void setFriends(List<Friends> friends) {
         this.friends = friends;
+    }
+
+    public List<Followers> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Followers> followers) {
+        this.followers = followers;
     }
 }
