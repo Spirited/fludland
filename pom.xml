@@ -19,8 +19,8 @@
     <name>Fludland - Root module</name>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <preliquibase.version>1.6.0</preliquibase.version>
         <commons-lang3>3.14.0</commons-lang3>
