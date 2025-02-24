@@ -47,6 +47,13 @@ public class Post {
     )
     private List<Thumb> thumbs = new ArrayList<>();
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "post"
+    )
+    private List<Comment> comments = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Timestamp(System.currentTimeMillis());
@@ -120,5 +127,18 @@ public class Post {
 
     public void setThumbs(List<Thumb> thumbs) {
         this.thumbs = thumbs;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setPost(this);
     }
 }

@@ -3,6 +3,7 @@ package org.fludland.controllers;
 import org.fludland.common.ErrorCodes;
 import org.fludland.common.ErrorResponse;
 import org.fludland.exceptions.PostNotFoundException;
+import org.fludland.exceptions.CommentNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,5 +21,13 @@ public class ErrorControllerAdvice {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(ErrorCodes.POST_NOT_FOUND_EXCEPTION));
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCommentNotFoundException(CommentNotFoundException ex) { // 404
+        LOGGER.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(ErrorCodes.COMMENT_NOT_FOUND));
     }
 }

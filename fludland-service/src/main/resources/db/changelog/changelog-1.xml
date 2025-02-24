@@ -25,4 +25,9 @@
         <sqlFile path="db/sql/thumbs.sql" />
     </changeSet>
 
+    <changeSet id="create_comments_tables" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/comments.sql" />
+    </changeSet>
+
 </databaseChangeLog>
