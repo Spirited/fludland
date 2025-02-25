@@ -1,8 +1,6 @@
 package org.fludland.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.fludland.common.ErrorCodes;
 import org.fludland.common.ErrorResponse;
 import org.fludland.service.CreatePostDto;
@@ -16,7 +14,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,7 +65,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
                 .andExpect(status().isOk());
 
         String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
-        List<PostDto> posts = asObject(contentAsString);
+        List<PostDto> posts = asSingleObject(contentAsString, new TypeReference<List<PostDto>>() {});
 
         assertThat(posts).hasSize(8);
     }
@@ -125,7 +122,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        List<PostDto> postDtos = asObject(contentAsString);
+        List<PostDto> postDtos = asSingleObject(contentAsString, new TypeReference<List<PostDto>>() {});
         assertThat(postDtos).isNotNull();
         assertThat(postDtos).isEmpty();
     }
@@ -137,7 +134,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        List<PostDto> postDtos = asObject(contentAsString);
+        List<PostDto> postDtos = asSingleObject(contentAsString, new TypeReference<List<PostDto>>() {});
         assertThat(postDtos).isNotNull();
         assertThat(postDtos).hasSize(3);
     }
@@ -310,38 +307,5 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
     public static EditPostDto createEditPostDto() {
         return new EditPostDto("edited_title", "added new test content");
-    }
-
-    public static <T> T asSingleObject(final String json, Class<T> clazz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        try {
-            return objectMapper.readValue(json, clazz);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static List<PostDto> asObject(final String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        try {
-            return objectMapper.readValue(json, List.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String asJsonString(final Object obj) {
-        String jsonContent;
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 }
