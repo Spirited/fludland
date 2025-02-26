@@ -31,6 +31,7 @@ const LoginPage = () => {
 
 
             if (response.status === 200) {
+                console.log(localStorage.getItem('token'));
                 navigate("/main");
             } else {
                 const errorData = await response.json();
