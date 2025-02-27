@@ -34,7 +34,7 @@ public class FollowerServiceImpl implements FollowerService {
 
     @Override
     public void getFollowers(Long userId) {
-
+        UserProfile profile = userProfileRepository.findByUserId(userId).orElseThrow(ProfileNotFoundException::new);
     }
 
     @Override
