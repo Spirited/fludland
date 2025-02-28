@@ -5,12 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 						http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create_posts_tables" author="@skompanets" context="migrate01" >
+    <changeSet id="create_posts_table" author="@skompanets" context="migrate01" >
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/post.sql" />
     </changeSet>
 
-    <changeSet id="create_update_modified_column_procedure." author="@skompanets" context="migrate01" runOnChange="true">
+    <changeSet id="create_update_modified_column_procedure" author="@skompanets" context="migrate01" runOnChange="true">
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/procedures/update_modified_column_procedure.sql" />
     </changeSet>
@@ -20,14 +20,19 @@
         <sqlFile path="db/sql/triggers/update_modified_time_trigger.sql" />
     </changeSet>
 
-    <changeSet id="create_thumbs_tables" author="@skompanets" context="migrate01">
+    <changeSet id="create_thumbs_table" author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/thumbs.sql" />
     </changeSet>
 
-    <changeSet id="create_comments_tables" author="@skompanets" context="migrate01">
+    <changeSet id="create_comments_table" author="@skompanets" context="migrate01">
         <comment>create currencies tables</comment>
         <sqlFile path="db/sql/comments.sql" />
+    </changeSet>
+
+    <changeSet id="create_messages_table" author="@skompanets" context="migrate01">
+        <comment>create currencies tables</comment>
+        <sqlFile path="db/sql/messages.sql" />
     </changeSet>
 
 </databaseChangeLog>
