@@ -26,17 +26,6 @@ public class MessageServiceImpl implements MessageService {
         this.messageRepository = messageRepository;
     }
 
-    private MessageDto mapToDto(Message message) {
-        return new MessageDto(
-            message.getId(),
-            message.getSource(),
-            message.getDestination(),
-            message.getMessage(),
-            message.getCreatedAt(),
-            message.getModifiedAt()
-        );
-    }
-
     @Override
     public MessageResponse sendMessage(MessageRequest request) {
         Message message = new Message();
@@ -64,5 +53,16 @@ public class MessageServiceImpl implements MessageService {
                         (m.getSource().equals(destinationId) && m.getDestination().equals(sourceId)))
             .map(this::mapToDto)
             .collect(Collectors.toList());
+    }
+
+    private MessageDto mapToDto(Message message) {
+        return new MessageDto(
+                message.getId(),
+                message.getSource(),
+                message.getDestination(),
+                message.getMessage(),
+                message.getCreatedAt(),
+                message.getModifiedAt()
+        );
     }
 }
