@@ -1,6 +1,7 @@
 package org.fludland.services.impl;
 
 import org.fludland.entities.Message;
+import org.fludland.exceptions.MessageNotFoundException;
 import org.fludland.repositories.MessageRepository;
 import org.fludland.service.MessageDto;
 import org.fludland.service.MessageRequest;
@@ -8,13 +9,10 @@ import org.fludland.service.MessageResponse;
 import org.fludland.service.MessageStatus;
 import org.fludland.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -42,8 +40,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageDto getMessage(long messageId) {
         return messageRepository.findById(messageId)
-            .map(this::mapToDto)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message not found"));
+                .map(this::mapToDto)
+                .orElseThrow(() -> new MessageNotFoundException("Message not found"));
     }
 
     @Override
@@ -52,7 +50,7 @@ public class MessageServiceImpl implements MessageService {
             .filter(m -> (m.getSource().equals(sourceId) && m.getDestination().equals(destinationId)) ||
                         (m.getSource().equals(destinationId) && m.getDestination().equals(sourceId)))
             .map(this::mapToDto)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private MessageDto mapToDto(Message message) {

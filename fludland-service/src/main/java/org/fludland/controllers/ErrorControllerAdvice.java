@@ -2,6 +2,7 @@ package org.fludland.controllers;
 
 import org.fludland.common.ErrorCodes;
 import org.fludland.common.ErrorResponse;
+import org.fludland.exceptions.MessageNotFoundException;
 import org.fludland.exceptions.PostNotFoundException;
 import org.fludland.exceptions.CommentNotFoundException;
 import org.slf4j.Logger;
@@ -29,5 +30,13 @@ public class ErrorControllerAdvice {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(ErrorCodes.COMMENT_NOT_FOUND));
+    }
+
+    @ExceptionHandler(MessageNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMessageNotFoundException(MessageNotFoundException ex) { // 404
+        LOGGER.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(ErrorCodes.MESSAGE_NOT_FOUND));
     }
 }

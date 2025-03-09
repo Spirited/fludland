@@ -13,6 +13,7 @@ public enum ErrorCodes {
     PROFILE_NOT_FOUND(4, "Profile not found"),
     MISSED_MANDATORY_PARAMETERS(5, "Mandatory parameters"),
     COMMENT_NOT_FOUND(6, "Comment not found"),
+    MESSAGE_NOT_FOUND(7, "Message not found"),
 
     INTERNAL_ERROR(999999, "Internal error"),
 
