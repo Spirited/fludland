@@ -5,6 +5,7 @@ create table token (
     user_id BIGINT NOT NULL,
     created_at timestamp NOT NULL,
     expired_at timestamp NOT NULL,
+    updated_at timestamp,
 
     CONSTRAINT pk_token PRIMARY KEY (id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
