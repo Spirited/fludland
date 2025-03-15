@@ -41,6 +41,8 @@ public class ProfileServiceImpl implements ProfileService {
             profileUrl = image.getUrl();
         }
 
+        String profileURL = String.join("/", "profiles", userId.toString());
+
         return new ProfileDto(
                 user.getUserId(),
                 user.getUsername(),
@@ -50,7 +52,7 @@ public class ProfileServiceImpl implements ProfileService {
                 profile.getGender(),
                 profile.getPhoneNumber(),
                 profile.getEmail(),
-                null,
+                profileURL,
                 Collections.singletonList(profileUrl)
         );
     }
