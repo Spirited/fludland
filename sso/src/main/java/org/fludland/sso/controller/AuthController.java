@@ -38,5 +38,18 @@ public class AuthController {
         //TODO
     }
 
-    //TODO: do verify profile, forget password, change password, remember Me
+    @PutMapping("/changePassword")
+    public void changePassword(String username) {
+        //TODO
+    }
+
+    @PutMapping("/emails/verify")
+    public void verifyEmail(String username) {
+        //TODO
+    }
+
+    @PutMapping("/remember/me")
+    public void rememberMe(String username) {
+        //TODO
+    }
 }
