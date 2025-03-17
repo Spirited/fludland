@@ -38,7 +38,7 @@ public class AuthController {
         //TODO
     }
 
-    @PutMapping("/changePassword")
+    @PostMapping("/forgetPassword")
     public void changePassword(String username) {
         //TODO
     }
