@@ -1,3 +1,7 @@
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+
 api:
   fludland:
     host: localhost:8081

@@ -20,7 +20,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final SSOClient ssoClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthFilter.class);
-    private static final Set<String> allowedURLs = Set.of("/login", "/sign-up");
+    private static final Set<String> allowedURLs = Set.of("/login", "/sign-up", "/swagger-ui.html");
 
     @Autowired
     public JwtAuthFilter(SSOClient ssoClient) {
@@ -31,8 +31,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
-        LOGGER.info("JWT Auth Filter");
-
         String requestURl = request.getRequestURL().toString();
         LOGGER.info("Request URI: {}", requestURl);
 
