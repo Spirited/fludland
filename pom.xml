@@ -29,7 +29,7 @@
         <auth0.jwt.version>3.18.1</auth0.jwt.version>
         <modelmapperr.version>3.2.1</modelmapperr.version>
         <spring-cloud.version>4.2.0</spring-cloud.version>
-        <swagger.version>2.2.0</swagger.version>
+        <swagger.version>2.8.5</swagger.version>
     </properties>
 
     <dependencyManagement>
