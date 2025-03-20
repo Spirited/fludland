@@ -10,14 +10,15 @@ public class FilterConfig {
     private final JwtAuthFilter jwtAuthFilter;
 
     @Autowired
-    public FilterConfig(final JwtAuthFilter jwtAuthFilter) {
+    public FilterConfig(JwtAuthFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
-    public FilterRegistrationBean<JwtAuthFilter> filterRegistrationBean() {
+    public FilterRegistrationBean<JwtAuthFilter> jwtAuthFilterRegistrationBean() {
         FilterRegistrationBean<JwtAuthFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(jwtAuthFilter);
+        filterRegistrationBean.setOrder(1);
 
         return filterRegistrationBean;
     }

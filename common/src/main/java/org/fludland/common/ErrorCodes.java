@@ -15,6 +15,8 @@ public enum ErrorCodes {
     COMMENT_NOT_FOUND(6, "Comment not found"),
     MESSAGE_NOT_FOUND(7, "Message not found"),
 
+    NOT_AUTHORIZED_REQUEST(8, "Header is empty"),
+
     INTERNAL_ERROR(999999, "Internal error"),
 
     SUCCESS_ERROR_CODE(200, "Success");
