@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "token")
 public class TokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_id_gen")

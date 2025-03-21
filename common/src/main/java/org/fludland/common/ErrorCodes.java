@@ -16,6 +16,7 @@ public enum ErrorCodes {
     MESSAGE_NOT_FOUND(7, "Message not found"),
 
     NOT_AUTHORIZED_REQUEST(8, "Header is empty"),
+    USER_NOT_FOUND(9, "User not found"),
 
     INTERNAL_ERROR(999999, "Internal error"),
 

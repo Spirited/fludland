@@ -62,7 +62,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     LOGGER.info("Successfully authenticated user: {}", user.getUsername());
 
                     request.setAttribute("userId", user.getUserId());
+                } else {
+                    LOGGER.warn("User not found");
+                    setErrorResponse(HttpStatus.NOT_FOUND, response, ErrorCodes.MESSAGE_NOT_FOUND);
+                    return;
                 }
+            } else {
+                LOGGER.warn("Missed Bearer");
+                setErrorResponse(HttpStatus.UNAUTHORIZED, response, ErrorCodes.NOT_AUTHORIZED_REQUEST);
+                return;
             }
         }
 
