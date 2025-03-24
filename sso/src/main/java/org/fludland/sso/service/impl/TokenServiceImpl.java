@@ -1,5 +1,7 @@
 package org.fludland.sso.service.impl;
 
+import org.fludland.sso.entities.TokenEntity;
+import org.fludland.sso.entities.User;
 import org.fludland.sso.repository.TokenRepository;
 import org.fludland.sso.service.TokenService;
 import org.fludland.sso.utils.TokenUtils;
@@ -18,8 +20,12 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public void save(String token) {
+    public TokenEntity save(User user) {
+        String token = tokenUtils.generateJWT(user.getId(), user.getUsername());
+        TokenEntity tokenEntity = new TokenEntity();
+        tokenEntity.setToken(token);
 
+        return tokenRepository.save(tokenEntity);
     }
 
     @Override
