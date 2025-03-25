@@ -1,6 +1,6 @@
 package org.fludland.userservice.controller;
 
-import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
 import org.fludland.userservice.exceptions.AssignedUserIdToProfileException;
 import org.fludland.userservice.exceptions.ProfileNotFoundException;
@@ -20,7 +20,7 @@ public class ErrorControllerAdvice {
         LOGGER.warn(ex.getMessage(), ex);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse(ErrorCodes.PROFILE_NOT_FOUND));
+                .body(new ErrorResponse(ErrorType.PROFILE_NOT_FOUND));
     }
 
     @ExceptionHandler(AssignedUserIdToProfileException.class)
@@ -28,6 +28,6 @@ public class ErrorControllerAdvice {
         LOGGER.warn(ex.getMessage(), ex);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(ErrorCodes.MISSED_MANDATORY_PARAMETERS));
+                .body(new ErrorResponse(ErrorType.MISSED_MANDATORY_PARAMETERS));
     }
 }

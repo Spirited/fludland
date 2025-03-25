@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public enum ErrorCodes {
+public enum ErrorType {
     USER_ALREADY_EXISTS_ERROR(1, "User already exists"),
     POST_NOT_FOUND_EXCEPTION(2, "Post not found"),
 
@@ -26,7 +26,7 @@ public enum ErrorCodes {
     private final String description;
 
     @JsonCreator
-    ErrorCodes(@JsonProperty("errorCode") final int errorCode, @JsonProperty("description") final String description) {
+    ErrorType(@JsonProperty("errorCode") final int errorCode, @JsonProperty("description") final String description) {
         this.errorCode = errorCode;
         this.description = description;
     }

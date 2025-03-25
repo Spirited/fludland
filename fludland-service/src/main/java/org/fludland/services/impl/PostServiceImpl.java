@@ -1,6 +1,6 @@
 package org.fludland.services.impl;
 
-import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
 import org.fludland.entities.Post;
 import org.fludland.exceptions.PostNotFoundException;
@@ -88,8 +88,8 @@ public class PostServiceImpl implements PostService {
         }
 
         return !postRepository.existsById(id)
-                ? new ErrorResponse(ErrorCodes.SUCCESS_ERROR_CODE)
-                : new ErrorResponse(ErrorCodes.INTERNAL_ERROR);
+                ? new ErrorResponse(ErrorType.SUCCESS_ERROR_CODE)
+                : new ErrorResponse(ErrorType.INTERNAL_ERROR);
     }
 
     private static PostDto convert(Post post) {

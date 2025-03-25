@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.fludland.api.clients.SSOClient;
-import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
 import org.fludland.sso.dtos.UserDetailsDto;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (StringUtils.isBlank(authorization)) {
                 LOGGER.warn("The request missing Authorization header");
-                setErrorResponse(HttpStatus.UNAUTHORIZED, response, ErrorCodes.NOT_AUTHORIZED_REQUEST);
+                setErrorResponse(HttpStatus.UNAUTHORIZED, response, ErrorType.NOT_AUTHORIZED_REQUEST);
                 return;
             }
 
@@ -64,12 +64,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     request.setAttribute("userId", user.getUserId());
                 } else {
                     LOGGER.warn("User not found");
-                    setErrorResponse(HttpStatus.NOT_FOUND, response, ErrorCodes.MESSAGE_NOT_FOUND);
+                    setErrorResponse(HttpStatus.NOT_FOUND, response, ErrorType.MESSAGE_NOT_FOUND);
                     return;
                 }
             } else {
                 LOGGER.warn("Missed Bearer");
-                setErrorResponse(HttpStatus.UNAUTHORIZED, response, ErrorCodes.NOT_AUTHORIZED_REQUEST);
+                setErrorResponse(HttpStatus.UNAUTHORIZED, response, ErrorType.NOT_AUTHORIZED_REQUEST);
                 return;
             }
         }
@@ -77,7 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void setErrorResponse(HttpStatus status, HttpServletResponse response, ErrorCodes errorCode){
+    private void setErrorResponse(HttpStatus status, HttpServletResponse response, ErrorType errorCode){
         response.setStatus(status.value());
         response.setContentType("application/json");
         ErrorResponse apiError = new ErrorResponse(errorCode);

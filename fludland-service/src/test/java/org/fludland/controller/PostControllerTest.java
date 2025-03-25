@@ -1,7 +1,7 @@
 package org.fludland.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
 import org.fludland.service.CreatePostDto;
 import org.fludland.service.EditPostDto;
@@ -82,7 +82,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
         assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorCodes.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
         assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
     }
 
@@ -176,7 +176,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
         assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorCodes.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
         assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
     }
 
@@ -192,7 +192,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
         assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorCodes.SUCCESS_ERROR_CODE);
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.SUCCESS_ERROR_CODE);
 
         String contentAsString2 = mockMvc.perform(delete("/posts/1"))
                 .andDo(print())
@@ -204,7 +204,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse2 = asSingleObject(contentAsString2, ErrorResponse.class);
         assertThat(errorResponse2).isNotNull();
         assertThat(errorResponse2.getErrorCodes()).isNotNull();
-        assertThat(errorResponse2.getErrorCodes()).isEqualTo(ErrorCodes.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse2.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
         assertThat(errorResponse2.getErrorCodes().getErrorCode()).isEqualTo(2);
     }
 
@@ -220,7 +220,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
         assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorCodes.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
         assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
     }
 
@@ -236,7 +236,7 @@ class PostControllerTest extends AbstractWebIntegrationTest {
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
         assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorCodes.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
         assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
     }
 

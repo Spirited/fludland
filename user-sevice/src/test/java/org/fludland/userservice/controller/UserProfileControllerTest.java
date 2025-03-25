@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.fludland.common.ErrorCodes.PROFILE_NOT_FOUND;
+import static org.fludland.common.ErrorType.PROFILE_NOT_FOUND;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

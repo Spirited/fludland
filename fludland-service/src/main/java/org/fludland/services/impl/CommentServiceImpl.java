@@ -1,6 +1,6 @@
 package org.fludland.services.impl;
 
-import org.fludland.common.ErrorCodes;
+import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
 import org.fludland.entities.Comment;
 import org.fludland.entities.Post;
@@ -99,7 +99,7 @@ public class CommentServiceImpl implements CommentService {
         
         comment.setReplies(new ArrayList<>());
         commentRepository.delete(comment);
-        return new ErrorResponse(ErrorCodes.SUCCESS_ERROR_CODE);
+        return new ErrorResponse(ErrorType.SUCCESS_ERROR_CODE);
     }
 
     private CommentDto convert(Comment comment) {

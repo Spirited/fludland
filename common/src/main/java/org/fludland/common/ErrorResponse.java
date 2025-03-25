@@ -5,18 +5,18 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorResponse {
-    private final ErrorCodes errorCodes;
+    private final ErrorType errorType;
 
     @JsonCreator
     public ErrorResponse(
-            @JsonProperty(value = "errorCode")  final ErrorCodes errorCode
+            @JsonProperty(value = "errorCode")  final ErrorType errorCode
     ) {
-        this.errorCodes = errorCode;
+        this.errorType = errorCode;
     }
 
     @JsonGetter
-    public ErrorCodes getErrorCodes() {
-        return errorCodes;
+    public ErrorType getErrorCodes() {
+        return errorType;
     }
 }
 

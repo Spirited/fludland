@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.fludland.common.ErrorCodes.WRONG_LOGIN_OR_PASSWORD_ERROR;
+import static org.fludland.common.ErrorType.WRONG_LOGIN_OR_PASSWORD_ERROR;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

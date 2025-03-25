@@ -30,11 +30,11 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void revoke() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void refreshToken() {
-
+        throw new UnsupportedOperationException();
     }
 }
