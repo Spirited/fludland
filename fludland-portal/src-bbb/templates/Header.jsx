@@ -1,4 +1,4 @@
-// import "../css/header_and_footer.css"
+import "../css/header_and_footer.css"
 import {Link} from "react-router-dom";
 
 const Header = () => (
