@@ -23,11 +23,42 @@ public class Matrix<T extends Number> {
     }
 
     public void put(int row, int column, T cellData) {
+        if (row >= rows || column >= columns) {
+            throw new MatrixIndexOutBoundException(row, column);
+        }
+
         data[row][column] = cellData;
     }
 
     public T get(int row, int column) {
-        return (T)data[row][column];
+        if (row >= rows || column >= columns) {
+            throw new MatrixIndexOutBoundException(row, column);
+        }
+
+        return (T) data[row][column];
     }
 
+    public int rows() {
+        return rows;
+    }
+
+    public int columns() {
+        return columns;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < rows; i++) {
+            builder.append("[ ");
+            for (int j = 0; j < columns; j++) {
+                builder.append(data[i][j]);
+                builder.append(" ");
+            }
+            builder.append("]\n");
+        }
+
+        return builder.toString();
+    }
 }
