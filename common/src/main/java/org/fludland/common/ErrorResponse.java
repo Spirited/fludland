@@ -9,13 +9,13 @@ public class ErrorResponse {
 
     @JsonCreator
     public ErrorResponse(
-            @JsonProperty(value = "errorCode")  final ErrorType errorCode
+            @JsonProperty(value = "errorType")  final ErrorType errorType
     ) {
-        this.errorType = errorCode;
+        this.errorType = errorType;
     }
 
     @JsonGetter
-    public ErrorType getErrorCodes() {
+    public ErrorType getErrorType() {
         return errorType;
     }
 }

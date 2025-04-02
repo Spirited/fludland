@@ -81,9 +81,9 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
-        assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorType().getErrorCode()).isEqualTo(2);
     }
 
     @Test
@@ -175,9 +175,9 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
-        assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorType().getErrorCode()).isEqualTo(2);
     }
 
     @Test
@@ -191,8 +191,8 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.SUCCESS_ERROR_CODE);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(ErrorType.SUCCESS_ERROR_CODE);
 
         String contentAsString2 = mockMvc.perform(delete("/posts/1"))
                 .andDo(print())
@@ -203,9 +203,9 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse2 = asSingleObject(contentAsString2, ErrorResponse.class);
         assertThat(errorResponse2).isNotNull();
-        assertThat(errorResponse2.getErrorCodes()).isNotNull();
-        assertThat(errorResponse2.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
-        assertThat(errorResponse2.getErrorCodes().getErrorCode()).isEqualTo(2);
+        assertThat(errorResponse2.getErrorType()).isNotNull();
+        assertThat(errorResponse2.getErrorType()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse2.getErrorType().getErrorCode()).isEqualTo(2);
     }
 
     @Test
@@ -219,9 +219,9 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
-        assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorType().getErrorCode()).isEqualTo(2);
     }
 
     @Test
@@ -235,9 +235,9 @@ class PostControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
-        assertThat(errorResponse.getErrorCodes().getErrorCode()).isEqualTo(2);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(ErrorType.POST_NOT_FOUND_EXCEPTION);
+        assertThat(errorResponse.getErrorType().getErrorCode()).isEqualTo(2);
     }
 
     @Test

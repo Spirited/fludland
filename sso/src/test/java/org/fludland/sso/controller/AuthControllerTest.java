@@ -70,7 +70,7 @@ class AuthControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(WRONG_LOGIN_OR_PASSWORD_ERROR);
+        assertThat(errorResponse.getErrorType()).isEqualTo(WRONG_LOGIN_OR_PASSWORD_ERROR);
     }
 
     @Test
@@ -90,6 +90,6 @@ class AuthControllerTest extends AbstractWebIntegrationTest {
 
         ErrorResponse errorResponse = asSingleObject(contentAsString, ErrorResponse.class);
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(WRONG_LOGIN_OR_PASSWORD_ERROR);
+        assertThat(errorResponse.getErrorType()).isEqualTo(WRONG_LOGIN_OR_PASSWORD_ERROR);
     }
 }

@@ -112,8 +112,8 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
         );
 
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(PROFILE_NOT_FOUND);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(PROFILE_NOT_FOUND);
     }
 
     @Test
@@ -196,8 +196,8 @@ class UserProfileControllerTest extends AbstractWebIntegrationTest {
         );
 
         assertThat(errorResponse).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isNotNull();
-        assertThat(errorResponse.getErrorCodes()).isEqualTo(PROFILE_NOT_FOUND);
+        assertThat(errorResponse.getErrorType()).isNotNull();
+        assertThat(errorResponse.getErrorType()).isEqualTo(PROFILE_NOT_FOUND);
     }
 
     private static UpdateProfileDto generateUpdateUserProfileDtoMale() {
