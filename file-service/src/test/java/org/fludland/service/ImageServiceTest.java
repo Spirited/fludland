@@ -121,7 +121,6 @@ class ImageServiceTest {
         verify(mockImageRepository, times(1)).findById(1L);
     }
 
-
     @Test
     void test_trying_delete_image_expected_success_result() {
         ImageEntity image = getImageEntity();
@@ -156,6 +155,13 @@ class ImageServiceTest {
         assertThat(imageDto.getUrl()).isEqualTo("/images/1");
 
         verify(mockImageRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void test_get_image_metadata_which_does_not_exist_expected_throw_exception() {
+        when(mockImageRepository.findById(99999L)).thenReturn(Optional.empty());
+
+        assertThrows(ImageNotFoundException.class, () -> imageService.getImage(99999L));
     }
 
     private static @NotNull ImageEntity getImageEntity() {
