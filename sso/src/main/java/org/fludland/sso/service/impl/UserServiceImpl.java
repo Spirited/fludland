@@ -6,6 +6,8 @@ import org.fludland.sso.exceptions.UserNotFoundException;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.UserService;
 import org.fludland.sso.utils.TokenUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenUtils tokenUtils;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     public UserServiceImpl(
@@ -28,6 +32,8 @@ public class UserServiceImpl implements UserService {
         Long userIdFromToken = tokenUtils.extractUserIdFromToken(token);
 
         User user = userRepository.findById(userIdFromToken).orElseThrow(UserNotFoundException::new);
+
+        LOGGER.info("Found user by ID={}", user.getId());
         return convertUserToUserDetailsDto(user);
     }
 
