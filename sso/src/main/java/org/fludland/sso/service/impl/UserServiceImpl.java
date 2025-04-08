@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
         return new UserDetailsDto(
                 user.getId(),
                 user.getUsername(),
-                null,
-                null
+                user.getCreatedAt(),
+                user.getUpdatedAt()
         );
     }
 }
