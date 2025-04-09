@@ -18,6 +18,8 @@ public enum ErrorType {
     NOT_AUTHORIZED_REQUEST(8, "Header is empty"),
     USER_NOT_FOUND(9, "User not found"),
 
+    USER_ALREADY_OFFLINE(10, "User already offline"),
+
     INTERNAL_ERROR(999999, "Internal error"),
 
     SUCCESS_ERROR_CODE(200, "Success");

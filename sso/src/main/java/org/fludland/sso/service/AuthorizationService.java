@@ -9,4 +9,7 @@ public interface AuthorizationService {
     SuccessfulResult register(LoginCreateDto login);
     void delete(String username);
     void logout(String username);
+    void changePassword(String username);
+    void verifyEmail(String username);
+    void rememberMe(String username);
 }

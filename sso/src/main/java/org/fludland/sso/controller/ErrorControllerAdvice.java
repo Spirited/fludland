@@ -2,6 +2,7 @@ package org.fludland.sso.controller;
 
 import org.fludland.common.ErrorType;
 import org.fludland.common.ErrorResponse;
+import org.fludland.sso.exceptions.UserAlreadyOfflineException;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
 import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
 import org.slf4j.Logger;
@@ -29,5 +30,13 @@ public class ErrorControllerAdvice {
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(new ErrorResponse(ErrorType.WRONG_LOGIN_OR_PASSWORD_ERROR));
+    }
+
+    @ExceptionHandler(UserAlreadyOfflineException.class)
+    public ResponseEntity<ErrorResponse> handleWrongLoginOrPasswordException(UserAlreadyOfflineException ex) { // 409
+        LOGGER.warn(ex.getMessage(), ex);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(ErrorType.USER_ALREADY_OFFLINE));
     }
 }

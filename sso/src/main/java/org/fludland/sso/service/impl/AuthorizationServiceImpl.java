@@ -4,6 +4,10 @@ import org.fludland.sso.dtos.LoginRequestDto;
 import org.fludland.sso.dtos.SuccessfulResult;
 import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.entities.User;
+import org.fludland.sso.enums.UserAccountStatus;
+import org.fludland.sso.enums.UserOnlineStatus;
+import org.fludland.sso.exceptions.UserAlreadyOfflineException;
+import org.fludland.sso.exceptions.UserNotFoundException;
 import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
 import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
 import org.fludland.sso.repository.UserRepository;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,6 +41,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new WrongLoginOrPasswordException();
         }
 
+        user.setLastLogin(LocalDateTime.now());
+        user.setUserOnlineStatus(UserOnlineStatus.ONLINE);
+
+        userRepository.save(user);
+
         return new SuccessfulResult(tokenUtils.generateJWT(user.getId(), loginRequestDto.getUsername()));
     }
 
@@ -51,6 +61,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         User user = new User();
         user.setUsername(login.getUsername());
         user.setPassword(login.getPassword());
+        user.setAccountStatus(UserAccountStatus.REGISTERED);
+        user.setUserOnlineStatus(UserOnlineStatus.ONLINE);
 
         User saved = userRepository.save(user);
 
@@ -63,7 +75,28 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void logout(String username) {   //will be implemented soon
+    public void logout(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        if (user.getUserOnlineStatus() == UserOnlineStatus.OFFLINE) {
+            throw new UserAlreadyOfflineException();
+        }
+        user.setUserOnlineStatus(UserOnlineStatus.OFFLINE);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(String username) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void verifyEmail(String username) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void rememberMe(String username) {
         throw new UnsupportedOperationException();
     }
 }

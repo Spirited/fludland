@@ -3,6 +3,7 @@ CREATE TABLE users (
   username      VARCHAR(255) NOT NULL,
   password      VARCHAR(255) NOT NULL,
   status        VARCHAR(255),
+  online_status VARCHAR(100),
   created_at    TIMESTAMP,
   updated_at    TIMESTAMP,
   last_login    TIMESTAMP,

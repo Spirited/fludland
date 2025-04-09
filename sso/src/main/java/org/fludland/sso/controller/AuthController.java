@@ -28,9 +28,9 @@ public class AuthController {
         return ResponseEntity.ok(authorizationService.register(loginCreateDto));
     }
 
-    @PostMapping("/logout")
-    public void logout(String username) {
-        //TODO
+    @PutMapping("/logout")
+    public void logout(@RequestParam(name = "username") String username) {
+        authorizationService.logout(username);
     }
 
     @DeleteMapping("/delete")

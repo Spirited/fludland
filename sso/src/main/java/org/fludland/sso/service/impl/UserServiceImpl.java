@@ -47,6 +47,8 @@ public class UserServiceImpl implements UserService {
         return new UserDetailsDto(
                 user.getId(),
                 user.getUsername(),
+                user.getAccountStatus(),
+                user.getUserOnlineStatus(),
                 user.getCreatedAt(),
                 user.getUpdatedAt()
         );

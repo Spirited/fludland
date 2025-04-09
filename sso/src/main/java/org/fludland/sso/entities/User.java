@@ -3,6 +3,7 @@ package org.fludland.sso.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.fludland.sso.enums.UserAccountStatus;
+import org.fludland.sso.enums.UserOnlineStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,6 +29,10 @@ public class User {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserAccountStatus accountStatus;
+
+    @Column(name = "online_status")
+    @Enumerated(EnumType.STRING)
+    private UserOnlineStatus userOnlineStatus;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -73,6 +78,14 @@ public class User {
         this.accountStatus = accountStatus;
     }
 
+    public UserOnlineStatus getUserOnlineStatus() {
+        return userOnlineStatus;
+    }
+
+    public void setUserOnlineStatus(UserOnlineStatus userOnlineStatus) {
+        this.userOnlineStatus = userOnlineStatus;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -112,6 +125,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", accountStatus=" + accountStatus +
+                ", userOnlineStatus=" + userOnlineStatus +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", lastLogin=" + lastLogin +
