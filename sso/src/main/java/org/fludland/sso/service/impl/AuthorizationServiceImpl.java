@@ -70,8 +70,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void delete(String username) {   //will be implemented soon
-        throw new UnsupportedOperationException();
+    public void delete(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        user.setUserOnlineStatus(UserOnlineStatus.OFFLINE);
+        user.setAccountStatus(UserAccountStatus.DELETED);
+        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
     }
 
     @Override
