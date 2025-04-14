@@ -34,8 +34,17 @@ public class AuthController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteAccount(String username) {
-        //TODO
+    public void deleteAccount(@RequestParam(name = "username") String username) {
+        authorizationService.delete(username);
+    }
+
+    @PutMapping("/changePassword")
+    public void changePassword(
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword
+    ) {
+        authorizationService.changePassword(username, oldPassword, newPassword);
     }
 
     @PostMapping("/forgetPassword")

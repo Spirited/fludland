@@ -6,10 +6,7 @@ import org.fludland.sso.dtos.LoginCreateDto;
 import org.fludland.sso.entities.User;
 import org.fludland.sso.enums.UserAccountStatus;
 import org.fludland.sso.enums.UserOnlineStatus;
-import org.fludland.sso.exceptions.UserAlreadyOfflineException;
-import org.fludland.sso.exceptions.UserNotFoundException;
-import org.fludland.sso.exceptions.UsernameAlreadyExistsException;
-import org.fludland.sso.exceptions.WrongLoginOrPasswordException;
+import org.fludland.sso.exceptions.*;
 import org.fludland.sso.repository.UserRepository;
 import org.fludland.sso.service.AuthorizationService;
 import org.fludland.sso.utils.TokenUtils;
@@ -92,8 +89,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void changePassword(String username) {
-        throw new UnsupportedOperationException();
+    public void changePassword(String username, String oldPassword, String newPassword) {
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        if (!user.getPassword().equalsIgnoreCase(oldPassword)) {
+            throw new VerificationException();
+        }
+
+        user.setPassword(newPassword);
+        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
     }
 
     @Override
